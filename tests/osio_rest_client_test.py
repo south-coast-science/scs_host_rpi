@@ -6,10 +6,9 @@ Created on 9 Nov 2016
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 '''
 
+from scs_core.osio.client.rest_client import RESTClient
 
 from scs_host.client.http_client import HTTPClient
-
-from scs_core.osio.client.rest_client import RESTClient
 
 
 # --------------------------------------------------------------------------------------------------------------------

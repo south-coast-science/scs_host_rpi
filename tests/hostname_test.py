@@ -6,9 +6,9 @@ Created on 4 Nov 2016
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 '''
 
-from scs_host.sys.hostname import Hostname
-
 from scs_core.common.json import JSONify
+
+from scs_host.sys.hostname import Hostname
 
 
 # --------------------------------------------------------------------------------------------------------------------
