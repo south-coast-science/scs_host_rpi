@@ -29,7 +29,7 @@ class Host(object):
     def mcu_temp():
         message = os.popen("vcgencmd measure_temp").readline()
 
-        tempstr = message.replace("temp=", "").replace("'C\n", "")
+        tempstr = message.replace(b"temp=", b"").replace(b"'C\n", b"")
         temp = float(tempstr)
 
         return MCUDatum(temp)

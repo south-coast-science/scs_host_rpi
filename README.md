@@ -3,5 +3,5 @@ Host abstractions for data producers or consumers running Raspian on the Raspber
 
 Required libraries: 
 
-* Third party: python3-dev, tzlocal, paho-mqtt, pycurl, spidev
+* Third party: pycurl, spidev
 * SCS root: scs_core
