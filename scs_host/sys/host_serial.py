@@ -1,8 +1,8 @@
-'''
+"""
 Created on 10 Jan 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-'''
+"""
 
 
 # TODO: implement HostSerial
@@ -11,16 +11,16 @@ Created on 10 Jan 2016
 # --------------------------------------------------------------------------------------------------------------------
 
 class HostSerial(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, port_number, baud_rate, hard_handshake=False):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__port_number = port_number
         self.__baud_rate = baud_rate
         self.__hard_handshake = hard_handshake

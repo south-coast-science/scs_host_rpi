@@ -1,4 +1,4 @@
-'''
+"""
 Created on 4 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
@@ -6,7 +6,7 @@ Created on 4 Nov 2016
 https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
 
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
-'''
+"""
 
 import socket
 import subprocess
@@ -19,9 +19,9 @@ from scs_core.data.json import JSONable
 # --------------------------------------------------------------------------------------------------------------------
 
 class Hostname(JSONable):
-    '''
+    """
     classdocs
-    '''
+    """
 
     __HOSTNAME_FILE =       "/etc/hostname"
     __HOSTS_FILE =          "/etc/hosts"
@@ -46,9 +46,9 @@ class Hostname(JSONable):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, operational, specified):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__operational = operational
         self.__specified = specified
 

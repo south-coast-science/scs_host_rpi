@@ -1,8 +1,8 @@
-'''
+"""
 Created on 20 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-'''
+"""
 
 import pycurl
 
@@ -12,16 +12,16 @@ import urllib.parse
 # --------------------------------------------------------------------------------------------------------------------
 
 class HTTPStreamingClient(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__listener = None
         self.__conn = None
 

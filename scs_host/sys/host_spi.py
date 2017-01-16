@@ -1,4 +1,4 @@
-'''
+"""
 Created on 4 Jul 2016
 
 http://tightdev.net/SpiDev_Doc.pdf
@@ -7,7 +7,7 @@ http://www.takaitra.com/posts/492
 http://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-'''
+"""
 
 import spidev
 
@@ -15,17 +15,17 @@ import spidev
 # --------------------------------------------------------------------------------------------------------------------
 
 class HostSPI(object):
-    '''
+    """
     classdocs
-    '''
+    """
     __BUS = 0
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, device, mode, max_speed):
-        '''
+        """
         Constructor
-        '''
+        """
 
         self.__device = device
         self.__mode = mode

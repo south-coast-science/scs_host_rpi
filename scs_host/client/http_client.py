@@ -1,8 +1,8 @@
-'''
+"""
 Created on 9 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-'''
+"""
 
 import http.client
 
@@ -12,9 +12,9 @@ import urllib.parse
 # --------------------------------------------------------------------------------------------------------------------
 
 class HTTPClient(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     __STATUS_OK =       200
 
@@ -22,9 +22,9 @@ class HTTPClient(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__conn = None
         self.__host = None
 
