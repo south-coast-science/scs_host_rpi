@@ -27,9 +27,10 @@ class Host(object):
 
     @staticmethod
     def mcu_temp():
-        message = os.popen("vcgencmd measure_temp").readline()
+        message = str(os.popen("vcgencmd measure_temp").readline())
 
-        tempstr = message.replace("temp=", "").replace("'C\n", "")
-        temp = float(tempstr)
+        message = message.replace("temp=", "").replace("'C\n", "")
+
+        temp = float(message)
 
         return MCUDatum(temp)
