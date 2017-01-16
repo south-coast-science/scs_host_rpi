@@ -38,7 +38,7 @@ class Lock(object):
     # TODO: add lock breaker on (long) timeout
 
     @classmethod
-    def acquire(cls, name, timeout = 1.0, verbose = False):
+    def acquire(cls, name, timeout=1.0, verbose=False):
         '''
         Acquire a lock with the given name.
         Raises a LockTimeout exception if the lock could not be acquired before timeout.
