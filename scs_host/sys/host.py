@@ -5,6 +5,7 @@ Created on 16 Nov 2016
 """
 
 import os
+import subprocess
 
 from scs_host.sys.mcu_datum import MCUDatum
 
@@ -34,3 +35,10 @@ class Host(object):
         temp = float(message)
 
         return MCUDatum(temp)
+
+
+    @staticmethod
+    def enable_eeprom_write():
+        # WARNING: may require restart for sensor I2C bus to function again
+        subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
+
