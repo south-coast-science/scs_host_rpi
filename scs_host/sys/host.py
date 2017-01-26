@@ -20,8 +20,8 @@ class Host(object):
     I2C_EEPROM =        3
     I2C_SENSORS =       1
 
-    SCS_CONF = '/home/pi/SCS/conf/'
-    SCS_OSIO = '/home/pi/SCS/osio/'
+    SCS_CONF = "/home/pi/SCS/conf/"         # hard-coded path
+    SCS_OSIO = "/home/pi/SCS/osio/"         # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
