@@ -27,6 +27,12 @@ class Host(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
+    def enable_eeprom_write():
+        # WARNING: may require restart for sensor I2C bus to function again
+        subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
+
+
+    @staticmethod
     def mcu_temp():
         message = str(os.popen("vcgencmd measure_temp").readline())
 
@@ -35,10 +41,4 @@ class Host(object):
         temp = float(message)
 
         return MCUDatum(temp)
-
-
-    @staticmethod
-    def enable_eeprom_write():
-        # WARNING: may require restart for sensor I2C bus to function again
-        subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
