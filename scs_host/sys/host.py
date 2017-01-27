@@ -29,7 +29,7 @@ class Host(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def enable_eeprom_write():
+    def enable_eeprom_access():
         # WARNING: may require restart for sensor I2C bus to function again
         subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
