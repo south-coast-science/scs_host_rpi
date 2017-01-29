@@ -25,6 +25,8 @@ class Host(object):
     SCS_CONF = "/home/pi/SCS/conf/"         # hard-coded path
     SCS_OSIO = "/home/pi/SCS/osio/"         # hard-coded path
 
+    SCS_EEP_IMAGE = "/home/pi/SCS/hat.eep"         # hard-coded path
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
