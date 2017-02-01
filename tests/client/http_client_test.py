@@ -14,11 +14,14 @@ from scs_host.client.http_client import HTTPClient
 host = "pokemon.p3d.co.uk"
 print("host:%s" % host)
 
-headers = {}  # {"Accept": "application/json", "Authorization": "api-key 43308b72-ad41-4555-b075-b4245c1971db"}
+headers = {"Accept": "application/json", "Authorization": "api-key 43308b72-ad41-4555-b075-b4245c1971db"}
 print("headers:%s" % headers)
 
 path = "/get"
 print("path:%s" % path)
+
+params = {'a':1}
+print("params:%s" % params)
 
 '''
 host = "api.opensensors.io"
@@ -39,7 +42,7 @@ client.connect(host)
 print(client)
 
 try:
-    data = client.get(path, None, headers)
+    data = client.get(path, params, headers)
     print(data)
 
 except Exception as ex:
