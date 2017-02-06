@@ -27,6 +27,8 @@ class Host(object):
     SCS_CONF = "/home/pi/SCS/conf/"             # hard-coded path
     SCS_OSIO = "/home/pi/SCS/osio/"             # hard-coded path
 
+    SCS_TMP = "/tmp/southcoastscience/"         # hard-coded path
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
