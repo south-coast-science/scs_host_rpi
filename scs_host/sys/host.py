@@ -22,12 +22,14 @@ class Host(object):
 
     DFE_EEPROM_ADDR =   0x50
 
-    DFE_EEP_IMAGE = "/home/pi/SCS/hat.eep"      # hard-coded path
+    DFE_EEP_IMAGE =     "/home/pi/SCS/hat.eep"              # hard-coded path
 
-    SCS_CONF = "/home/pi/SCS/conf/"             # hard-coded path
-    SCS_OSIO = "/home/pi/SCS/osio/"             # hard-coded path
+    SCS_CONF =          "/home/pi/SCS/conf/"                # hard-coded path
+    SCS_OSIO =          "/home/pi/SCS/osio/"                # hard-coded path
 
-    SCS_TMP = "/tmp/southcoastscience/"         # hard-coded path
+    SCS_LOCK =          "/run/lock/southcoastscience/"      # hard-coded path
+
+    SCS_TMP =           "/tmp/southcoastscience/"           # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
