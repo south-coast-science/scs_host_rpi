@@ -48,4 +48,3 @@ class Host(object):
         temp = float(message)
 
         return MCUDatum(temp)
-
