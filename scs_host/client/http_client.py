@@ -46,7 +46,7 @@ class HTTPClient(object):
         params = urllib.parse.urlencode(payload) if payload else None
         query = path + '?' + params if params else path
 
-        print("query:%s" % query)
+        # print("query:%s" % query)
 
         # request...
         self.__conn.request("GET", query, None, headers)
