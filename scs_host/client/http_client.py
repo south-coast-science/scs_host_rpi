@@ -69,7 +69,7 @@ class HTTPClient(object):
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK and response.status != HTTPClient.__STATUS_CREATED:
+        if response.status != HTTPClient.__STATUS_CREATED:
             raise RuntimeError("HTTPClient.post: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
@@ -100,7 +100,7 @@ class HTTPClient(object):
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPClient.__STATUS_NO_CONTENT:
             raise RuntimeError("HTTPClient.delete: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
