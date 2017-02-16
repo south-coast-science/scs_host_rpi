@@ -16,7 +16,9 @@ class HTTPClient(object):
     classdocs
     """
 
-    __STATUS_OK =       200
+    __STATUS_OK =           200
+    __STATUS_CREATED =      201
+    __STATUS_NO_CONTENT =   204
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -62,15 +64,12 @@ class HTTPClient(object):
 
 
     def post(self, path, payload, headers):
-        # data...
-        encoded_payload = urllib.parse.urlencode(payload) if payload else None
-
         # request...
-        self.__conn.request("POST", path, encoded_payload, headers)
+        self.__conn.request("POST", path, payload, headers)
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPClient.__STATUS_OK and response.status != HTTPClient.__STATUS_CREATED:
             raise RuntimeError("HTTPClient.post: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
