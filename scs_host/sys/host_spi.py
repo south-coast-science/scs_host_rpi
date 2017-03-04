@@ -47,6 +47,9 @@ class HostSPI(object):
 
 
     def close(self):
+        if self.__bus is None:
+            return
+
         self.__bus.close()
         self.__bus = None
 
