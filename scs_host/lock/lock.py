@@ -28,8 +28,8 @@ class Lock(object):
         Should be invoked on class load.
         """
         try:
-            os.mkdir(Host.SCS_LOCK)
-            os.chmod(Host.SCS_LOCK, 0o777)
+            os.mkdir(Host.SCS_LOCK, 0o777)
+            # os.chmod(Host.SCS_LOCK, 0o777)
         except FileExistsError:
             pass
 
@@ -134,11 +134,11 @@ class Lock(object):
     @classmethod
     def __assert(cls, name):
         try:
-            os.mkdir(cls.__name_dir(name))
-            os.mkdir(cls.__ident_dir(name, os.getpid()))
+            os.mkdir(cls.__name_dir(name), 0o777)
+            os.mkdir(cls.__ident_dir(name, os.getpid()), 0o777)
 
-            os.chmod(cls.__name_dir(name), 0o777)
-            os.chmod(cls.__ident_dir(name, os.getpid()), 0o777)
+            # os.chmod(cls.__name_dir(name), 0o777)
+            # os.chmod(cls.__ident_dir(name, os.getpid()), 0o777)
             return True
 
         except FileExistsError:
