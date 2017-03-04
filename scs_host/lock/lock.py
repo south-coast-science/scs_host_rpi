@@ -28,7 +28,7 @@ class Lock(object):
         Should be invoked on class load.
         """
         try:
-            os.mkdir(Host.SCS_LOCK)
+            os.mkdir(Host.SCS_LOCK, 0o777)
         except FileExistsError:
             pass
 
