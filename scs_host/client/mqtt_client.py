@@ -5,8 +5,11 @@ Created on 11 Nov 2016
 
 https://pypi.python.org/pypi/paho-mqtt
 
-mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> -m 'This is a test message' -u <UserName> -P <Device Password>
-mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text -m 'hello' -u southcoastscience-dev -P cPhbitmp
+mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
+-m 'This is a test message' -u <UserName> -P <Device Password>
+
+mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text \
+-m 'hello' -u southcoastscience-dev -P cPhbitmp
 """
 
 import paho.mqtt.publish as publish
@@ -45,13 +48,13 @@ class MQTTClient(object):
 
     def publish(self, topic, payload):
         publish.single(topic, payload, 0, False, self.__host, MQTTClient.__PORT, self.__client_id,
-                                MQTTClient.__TIMEOUT, None, self.__auth)
+                       MQTTClient.__TIMEOUT, None, self.__auth)
 
 
     def subscribe(self, topic):
         while True:
             message = subscribe.simple(topic, 0, 1, False, self.__host, MQTTClient.__PORT, self.__client_id,
-                                        MQTTClient.__TIMEOUT, None, self.__auth)
+                                       MQTTClient.__TIMEOUT, None, self.__auth)
 
             payload = message.payload.decode()
 
