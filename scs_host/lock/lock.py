@@ -138,9 +138,11 @@ class Lock(object):
         name_dir = cls.__name_dir(name)
         ident_dir = cls.__ident_dir(name, os.getpid())
 
+        # TODO: os.makedirs!
+
         try:
             os.mkdir(name_dir)
-            os.chmod(name_dir, 0o777)
+            os.chmod(name_dir, 0o777)       # TODO: warning: may break atomicity
 
             os.mkdir(ident_dir)
             os.chmod(ident_dir, 0o777)
