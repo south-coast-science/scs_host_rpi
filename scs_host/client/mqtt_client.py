@@ -4,6 +4,8 @@ Created on 11 Nov 2016
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
 https://pypi.python.org/pypi/paho-mqtt
+http://www.hivemq.com/blog/mqtt-client-library-paho-python
+
 
 mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
 -m 'This is a test message' -u <UserName> -P <Device Password>
