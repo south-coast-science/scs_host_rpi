@@ -45,4 +45,6 @@ client.connect(host, client_id, username, password)
 print(client)
 print("-")
 
-client.publish(topic, payload)
+client.publish(topic, payload, 10.0)
+
+client.disconnect()

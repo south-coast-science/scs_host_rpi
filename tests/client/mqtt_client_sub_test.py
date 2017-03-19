@@ -38,7 +38,6 @@ print("-")
 # --------------------------------------------------------------------------------------------------------------------
 
 client = MQTTClient()
-client.connect(host, client_id, username, password)
 print(client)
 print("-")
 
