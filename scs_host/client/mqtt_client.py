@@ -18,7 +18,7 @@ import paho.mqtt.publish as publish
 import paho.mqtt.subscribe as subscribe
 
 
-# TODO: enable multiple topics?
+# TODO: migrate to threaded version - see http://www.hivemq.com/blog/mqtt-client-library-paho-python
 
 # --------------------------------------------------------------------------------------------------------------------
 
