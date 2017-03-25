@@ -5,8 +5,11 @@ Created on 11 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
-mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> -m 'This is a test message' -u <UserName> -P <Device Password>
-mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text -m 'hello' -u southcoastscience-dev -P cPhbitmp
+mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
+ -m 'This is a test message' -u <UserName> -P <Device Password>
+
+mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text \
+ -m 'hello' -u southcoastscience-dev -P cPhbitmp
 
 """
 
@@ -45,4 +48,6 @@ client.connect(host, client_id, username, password)
 print(client)
 print("-")
 
-client.publish(topic, payload)
+client.publish(topic, payload, 10.0)
+
+client.disconnect()
