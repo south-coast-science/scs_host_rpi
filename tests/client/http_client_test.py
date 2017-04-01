@@ -20,7 +20,7 @@ print("headers:%s" % headers)
 path = "/get"
 print("path:%s" % path)
 
-params = {'a':1}
+params = {'a': 1}
 print("params:%s" % params)
 
 '''
