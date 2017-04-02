@@ -9,6 +9,7 @@ import http.client
 import urllib.parse
 
 from scs_core.sys.http_exception import HTTPException
+from scs_core.sys.http_status import HTTPStatus
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -17,11 +18,6 @@ class HTTPClient(object):
     """
     classdocs
     """
-
-    __STATUS_OK =           200
-    __STATUS_CREATED =      201
-    __STATUS_NO_CONTENT =   204
-
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -50,8 +46,6 @@ class HTTPClient(object):
         params = urllib.parse.urlencode(payload) if payload else None
         query = path + '?' + params if params else path
 
-        # print("query:%s" % query)
-
         # request...
         self.__conn.request("GET", query, None, headers)
 
@@ -60,7 +54,7 @@ class HTTPClient(object):
         data = response.read()
 
         # error...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPStatus.OK:
             raise HTTPException.construct(response, data)
 
         return data.decode()
@@ -69,14 +63,13 @@ class HTTPClient(object):
     def post(self, path, payload, headers):
         # request...
         self.__conn.request("POST", path, payload, headers)
-        response = self.__conn.getresponse()
 
         # response...
         response = self.__conn.getresponse()
         data = response.read()
 
         # error...
-        if response.status != HTTPClient.__STATUS_CREATED:
+        if response.status != HTTPStatus.CREATED:
             raise HTTPException.construct(response, data)
 
         return data.decode()
@@ -91,7 +84,7 @@ class HTTPClient(object):
         data = response.read()
 
         # error...
-        if response.status != HTTPClient.__STATUS_OK and response.status != HTTPClient.__STATUS_NO_CONTENT:
+        if response.status != HTTPStatus.OK and response.status != HTTPStatus.NO_CONTENT:
             raise HTTPException.construct(response, data)
 
         return data.decode()
@@ -106,7 +99,7 @@ class HTTPClient(object):
         data = response.read()
 
         # error...
-        if response.status != HTTPClient.__STATUS_NO_CONTENT:
+        if response.status != HTTPStatus.NO_CONTENT:
             raise HTTPException.construct(response, data)
 
         return data.decode()
