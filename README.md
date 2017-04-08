@@ -1,7 +1,7 @@
 # scs-host-rpi
 Host abstractions for data producers or consumers running Raspian on the Raspberry Pi.
 
-Required libraries: 
+**Required libraries:** 
 
 * Third party: pycurl, spidev
 * SCS root: scs_core
