@@ -4,55 +4,57 @@
 Created on 11 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-
-example:
-mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
- -m 'This is a test message' -u <UserName> -P <Device Password>
-
-mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text \
- -m 'hello' -u southcoastscience-dev -P cPhbitmp
-
 """
 
+import sys
 import time
 
+from scs_core.osio.client.client_auth import ClientAuth
+
 from scs_host.client.mqtt_client import MQTTClient
+from scs_host.client.mqtt_client import MQTTSubscriber
+from scs_host.sys.host import Host
 
 
 # --------------------------------------------------------------------------------------------------------------------
+# handler...
 
-def print_message(payload):
-    print("payload: %s" % payload)
+def print_message(publication):
+    print("publication: %s" % publication)
+    sys.stdout.flush()
 
 
 # --------------------------------------------------------------------------------------------------------------------
-
-username = "southcoastscience-dev"
-print("username:%s" % username)
-
-client_id = "5895"                      # scs-rpi-007
-print("client_id:%s" % client_id)
-
-password = "9jNlykys"
-print("password:%s" % password)
-
-print("-")
-
-host = "mqtt.opensensors.io"
-print("host:%s" % host)
+# config...
 
 topic = "/orgs/south-coast-science-dev/development/device/alpha-pi-eng-000006/control"
-print("topic:%s" % topic)
+print("topic: %s" % topic)
 
+subscriber = MQTTSubscriber(topic, print_message)
+print("subscriber: %s" % subscriber)
 print("-")
 
 
 # --------------------------------------------------------------------------------------------------------------------
+# resource...
 
-client = MQTTClient(topic, print_message)
-client.connect(host, client_id, username, password)
+auth = ClientAuth.load_from_host(Host)
+
+if auth is None:
+    print("ClientAuth not available.", file=sys.stderr)
+    exit()
+
+print("auth: %s" % auth)
+print("-")
+
+
+# --------------------------------------------------------------------------------------------------------------------
+# run...
+
+client = MQTTClient(subscriber)
+client.connect(ClientAuth.MQTT_HOST, auth.client_id, auth.user_id, auth.client_password)
 print(client)
 print("-")
 
 while True:
-    time.sleep(1)
+    time.sleep(0.1)

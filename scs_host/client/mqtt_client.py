@@ -14,9 +14,15 @@ mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/tes
 -m 'hello' -u southcoastscience-dev -P cPhbitmp
 """
 
+import json
 import time
 
+from collections import OrderedDict
+
 import paho.mqtt.client as paho
+
+from scs_core.data.json import JSONify
+from scs_core.data.publication import Publication
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -35,14 +41,12 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, subscription=None, on_message=None):
+    def __init__(self, subscriber=None):        # TODO: handle multiple subscriptions
         """
         Constructor
         """
         self.__client = None
-
-        self.__subscription = subscription
-        self.__on_message = on_message
+        self.__subscriber = subscriber
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -69,8 +73,10 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def publish(self, topic, payload, timeout):
-        msg_info = self.__client.publish(topic, str(payload), MQTTClient.__PUB_QOS)
+    def publish(self, publication, timeout):
+        payload = JSONify.dumps(publication.payload)
+
+        msg_info = self.__client.publish(publication.topic, payload, MQTTClient.__PUB_QOS)
 
         end_time = time.time() + timeout
 
@@ -85,21 +91,60 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    # noinspection PyUnusedLocal
     def on_connect(self, client, userdata, flags, rc):
-        # print("on_connect: client: %s userdata: %s flags: %s, rc: %s" % (client, userdata, flags, rc))
-
-        if self.__subscription:
-            self.__client.subscribe(self.__subscription, qos=MQTTClient.__SUB_QOS)
+        if self.__subscriber:
+            self.__client.subscribe(self.__subscriber.topic, qos=MQTTClient.__SUB_QOS)
 
 
+    # noinspection PyUnusedLocal
     def on_message(self, client, userdata, msg):
-        # print("on_message: client: %s userdata: %s msg: %s" % (client, userdata, msg.payload))
+        if self.__subscriber:
+            payload = msg.payload.decode()
+            payload_jdict = json.loads(payload, object_pairs_hook=OrderedDict)
 
-        if self.__subscription and self.__on_message:
-            self.__on_message(msg.payload)
+            self.__subscriber.handler(Publication(self.__subscriber.topic, payload_jdict))
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "MQTTClient:{subscription:%s}" % self.__subscription
+        return "MQTTClient:{subscriber:%s}" % self.__subscriber
+
+
+# --------------------------------------------------------------------------------------------------------------------
+
+class MQTTSubscriber(object):
+    """
+    classdocs
+    """
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, topic, handler):
+        """
+        Constructor
+        """
+        self.__topic = topic
+        self.__handler = handler
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @property
+    def topic(self):
+        return self.__topic
+
+
+    @property
+    def handler(self):
+        return self.__handler
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def __str__(self, *args, **kwargs):
+        return "MQTTSubscriber:{topic:%s, handler:%s}" % (self.topic, self.handler)
+
+
+
