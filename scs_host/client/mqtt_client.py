@@ -95,7 +95,7 @@ class MQTTClient(object):
     def on_message(self, client, userdata, msg):
         # print("on_message: client: %s userdata: %s msg: %s" % (client, userdata, msg.payload))
 
-        if self.__on_message:
+        if self.__subscription and self.__on_message:
             self.__on_message(msg.payload)
 
 
