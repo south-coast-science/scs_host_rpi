@@ -5,6 +5,7 @@ Created on 11 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
+example:
 mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
  -m 'This is a test message' -u <UserName> -P <Device Password>
 
@@ -13,41 +14,53 @@ mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/tes
 
 """
 
+
+import sys
+import time
+
+from scs_core.data.json import JSONify
+from scs_core.osio.client.client_auth import ClientAuth
+
 from scs_host.client.mqtt_client import MQTTClient
+from scs_host.sys.host import Host
 
 
-# --------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------
+# resource...
 
-username = "southcoastscience-dev"
-print("username:%s" % username)
+auth = ClientAuth.load_from_host(Host)
 
-client_id = "5402"                      # text-test
-print("client_id:%s" % client_id)
-
-password = "cPhbitmp"
-print("password:%s" % password)
-
-print("-")
-
-host = "mqtt.opensensors.io"
-print("host:%s" % host)
-
-topic = "/users/southcoastscience-dev/test/text"
-print("topic:%s" % topic)
-
-payload = "python message 11"
-print("payload:%s" % payload)
-
-print("-")
-
-
-# --------------------------------------------------------------------------------------------------------------------
+if auth is None:
+    print("ClientAuth not available.", file=sys.stderr)
+    exit()
 
 client = MQTTClient()
-client.connect(host, client_id, username, password)
+client.connect(ClientAuth.MQTT_HOST, auth.client_id, auth.user_id, auth.client_password)
+
 print(client)
 print("-")
 
-client.publish(topic, payload, 10.0)
+
+# --------------------------------------------------------------------------------------------------------------------
+
+
+topic = "/orgs/south-coast-science-dev/development/device/alpha-pi-eng-000006/control"
+print("topic:%s" % topic)
+
+message = "python message "
+print("message:%s" % message)
+
+print("-")
+
+
+# --------------------------------------------------------------------------------------------------------------------
+
+for i in range(10):
+    payload = JSONify.dumps(message + str(i))
+    success = client.publish(topic, payload, 10.0)
+
+    print("success: %s payload: %s" % (success, payload))
+
+    time.sleep(1)
 
 client.disconnect()

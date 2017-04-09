@@ -5,6 +5,7 @@ Created on 11 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
+example:
 mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
  -m 'This is a test message' -u <UserName> -P <Device Password>
 
@@ -13,7 +14,15 @@ mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/tes
 
 """
 
+import time
+
 from scs_host.client.mqtt_client import MQTTClient
+
+
+# --------------------------------------------------------------------------------------------------------------------
+
+def print_message(payload):
+    print("payload: %s" % payload)
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -21,10 +30,10 @@ from scs_host.client.mqtt_client import MQTTClient
 username = "southcoastscience-dev"
 print("username:%s" % username)
 
-client_id = "5404"                      # listener
+client_id = "5895"                      # scs-rpi-007
 print("client_id:%s" % client_id)
 
-password = "mh7nxziu"
+password = "9jNlykys"
 print("password:%s" % password)
 
 print("-")
@@ -32,7 +41,7 @@ print("-")
 host = "mqtt.opensensors.io"
 print("host:%s" % host)
 
-topic = "/users/southcoastscience-dev/test/json"
+topic = "/orgs/south-coast-science-dev/development/device/alpha-pi-eng-000006/control"
 print("topic:%s" % topic)
 
 print("-")
@@ -40,14 +49,10 @@ print("-")
 
 # --------------------------------------------------------------------------------------------------------------------
 
-client = MQTTClient()
+client = MQTTClient(topic, print_message)
+client.connect(host, client_id, username, password)
 print(client)
 print("-")
 
-
-try:
-    for payload in client.subscribe(topic):
-        print(payload)
-
-except KeyboardInterrupt:
-    pass
+while True:
+    time.sleep(1)

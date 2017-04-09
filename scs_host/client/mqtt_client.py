@@ -18,8 +18,6 @@ import time
 
 import paho.mqtt.client as paho
 
-import paho.mqtt.subscribe as subscribe
-
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -37,31 +35,31 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self):
+    def __init__(self, subscription=None, on_message=None):
         """
         Constructor
         """
-        self.__host = None
-        self.__client_id = None
-        self.__auth = None
-
         self.__client = None
+
+        self.__subscription = subscription
+        self.__on_message = on_message
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def connect(self, host, client_id, username, password):         # only required for publish
-        # ident for subscribe...
-        self.__host = host
-        self.__client_id = client_id
-        self.__auth = {'username': username, 'password': password}
-
+    def connect(self, host, client_id, username, password):
         # paho client...
         self.__client = paho.Client(client_id)
 
+        # event handling...
+        self.__client.on_connect = self.on_connect
+        self.__client.on_message = self.on_message
+
+        # connect...
         self.__client.username_pw_set(username, password)
         self.__client.connect(host, MQTTClient.__PORT)
 
+        # start thread...
         self.__client.loop_start()
 
 
@@ -85,17 +83,23 @@ class MQTTClient(object):
         return False
 
 
-    def subscribe(self, topic):     # TODO: update to threaded version?
-        while True:
-            message = subscribe.simple(topic, MQTTClient.__SUB_QOS, 1, False, self.__host, MQTTClient.__PORT,
-                                       self.__client_id, MQTTClient.__TIMEOUT, None, self.__auth)
+    # ----------------------------------------------------------------------------------------------------------------
 
-            payload = message.payload.decode()
+    def on_connect(self, client, userdata, flags, rc):
+        # print("on_connect: client: %s userdata: %s flags: %s, rc: %s" % (client, userdata, flags, rc))
 
-            yield (payload)
+        if self.__subscription:
+            self.__client.subscribe(self.__subscription, qos=MQTTClient.__SUB_QOS)
+
+
+    def on_message(self, client, userdata, msg):
+        # print("on_message: client: %s userdata: %s msg: %s" % (client, userdata, msg.payload))
+
+        if self.__on_message:
+            self.__on_message(msg.payload)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "MQTTClient:{host:%s, client_id:%s, auth:%s}" % (self.__host, self.__client_id, self.__auth)
+        return "MQTTClient:{subscription:%s}" % self.__subscription
