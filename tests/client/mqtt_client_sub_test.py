@@ -36,8 +36,9 @@ print("-")
 
 
 # --------------------------------------------------------------------------------------------------------------------
-# resource...
+# resources...
 
+# ClientAuth...
 auth = ClientAuth.load_from_host(Host)
 
 if auth is None:

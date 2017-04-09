@@ -42,7 +42,7 @@ print("-")
 
 
 # ------------------------------------------------------------------------------------------------------------
-# resource...
+# resources...
 
 client = MQTTClient()
 client.connect(host, client_id, username, password)

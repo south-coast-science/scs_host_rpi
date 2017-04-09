@@ -16,12 +16,10 @@ from scs_host.client.http_client import HTTPClient
 api_key = "43308b72-ad41-4555-b075-b4245c1971db"
 path = "/v1/orgs/south-coast-science-dev/topics"
 
-http_client = HTTPClient()
-
 
 # --------------------------------------------------------------------------------------------------------------------
 
-rest_client = RESTClient(http_client, api_key)
+rest_client = RESTClient(HTTPClient(), api_key)
 rest_client.connect()
 print(rest_client)
 
