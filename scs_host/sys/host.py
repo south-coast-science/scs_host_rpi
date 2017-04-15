@@ -2,15 +2,16 @@
 Created on 16 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+https://raspberrypi.stackexchange.com/questions/2086/how-do-i-get-the-serial-number
 """
 
 import os
+import re
 import subprocess
 
 from scs_host.sys.mcu_datum import MCUDatum
 
-
-# TODO: add reboot method
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -35,6 +36,27 @@ class Host(object):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+
+    @staticmethod
+    def serial_number():
+        cpuinfo = os.popen("cat /proc/cpuinfo").readlines()
+        line = cpuinfo[-1]
+
+        match = re.match('Serial\s*:\s*([0-9A-Fa-f]+)', line)
+
+        if match is None:
+            return None
+
+        fields = match.groups()
+        serial = fields[0]
+
+        return serial
+
+
+    @staticmethod
+    def power_cycle():
+        subprocess.call(['sudo', 'reboot'])
+
 
     @staticmethod
     def enable_eeprom_access():
