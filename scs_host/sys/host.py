@@ -37,6 +37,11 @@ class Host(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
+    def power_cycle():
+        subprocess.call(['sudo', 'reboot'])
+
+
+    @staticmethod
     def enable_eeprom_access():
         subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
