@@ -10,8 +10,6 @@ import subprocess
 from scs_host.sys.mcu_datum import MCUDatum
 
 
-# TODO: add reboot method
-
 # --------------------------------------------------------------------------------------------------------------------
 
 class Host(object):
