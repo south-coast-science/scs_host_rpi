@@ -43,10 +43,12 @@ class HostSerial(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    # noinspection PyUnusedLocal
     def read_line(self, terminator, timeout):
         return ''
 
 
+    # noinspection PyUnusedLocal
     def write_line(self, text):
         return 0
 
