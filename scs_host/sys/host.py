@@ -8,6 +8,7 @@ https://raspberrypi.stackexchange.com/questions/2086/how-do-i-get-the-serial-num
 
 import os
 import re
+import socket
 import subprocess
 
 from scs_host.sys.mcu_datum import MCUDatum
@@ -75,6 +76,11 @@ class Host(object):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def name(cls):
+        return socket.gethostname()
+
 
     @classmethod
     def conf_dir(cls):
