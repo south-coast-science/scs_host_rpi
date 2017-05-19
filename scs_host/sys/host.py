@@ -26,6 +26,8 @@ class Host(object):
 
     DFE_EEPROM_ADDR =   0x50
 
+    COMMAND_DIR =       "/home/pi/SCS/cmd"                 # hard-coded path
+
     DFE_EEP_IMAGE =     "/home/pi/SCS/hat.eep"              # hard-coded path
 
     SCS_LOCK =          "/run/lock/southcoastscience/"      # hard-coded path
