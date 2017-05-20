@@ -31,26 +31,21 @@ class HostSerial(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self, timeout):
-        pass
+        raise NotImplementedError
 
 
     def close(self):
-        if self.__ser is None:
-            return
-
-        pass
+        raise NotImplementedError
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    # noinspection PyUnusedLocal
     def read_line(self, terminator, timeout):
-        return ''
+        raise NotImplementedError
 
 
-    # noinspection PyUnusedLocal
     def write_line(self, text):
-        return 0
+        raise NotImplementedError
 
 
     # ----------------------------------------------------------------------------------------------------------------
