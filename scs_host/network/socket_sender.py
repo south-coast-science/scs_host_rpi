@@ -8,6 +8,8 @@ import socket
 import time
 
 
+# TODO: re-write as ProcessComms implementation
+
 # --------------------------------------------------------------------------------------------------------------------
 
 class SocketSender(object):
