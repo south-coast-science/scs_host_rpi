@@ -57,7 +57,7 @@ class UDS(ProcessComms):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def connect(self):
+    def connect(self, wait_for_availability=True):
         self.__socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
 
