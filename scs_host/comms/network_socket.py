@@ -106,9 +106,9 @@ class NetworkSocket(ProcessComms):
                 if not wait_for_availability:
                     raise ConnectionRefusedError(ex)
 
-                time.sleep(0.1)
-
                 self.close()
+
+                time.sleep(0.1)
 
                 self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.connect(True)
