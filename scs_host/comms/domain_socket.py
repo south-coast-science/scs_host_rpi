@@ -99,7 +99,7 @@ class DomainSocket(ProcessComms):
                 if not wait_for_availability:
                     raise ConnectionRefusedError(ex)
 
-            time.sleep(0.1)
+                time.sleep(0.1)
 
         # data...
         self.__socket.sendall(message.strip().encode())
