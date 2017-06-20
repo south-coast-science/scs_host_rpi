@@ -34,6 +34,11 @@ class Host(object):
 
     SCS_TMP =           "/tmp/southcoastscience/"           # hard-coded path
 
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
+
     __SCS_CONF =        "/home/pi/SCS/conf/"                # hard-coded path
     __SCS_OSIO =        "/home/pi/SCS/osio/"                # hard-coded path
 
@@ -75,6 +80,13 @@ class Host(object):
         temp = float(message)
 
         return MCUDatum(temp)
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def ndir_device(cls):
+        return cls.__NDIR_DEVICE            # we might have to search for it instead
 
 
     # ----------------------------------------------------------------------------------------------------------------
