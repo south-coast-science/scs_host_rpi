@@ -35,27 +35,32 @@ class SemaphoreScheduler(object):
         self.__schedule = schedule
         self.__verbose = verbose
 
+        self.__jobs = []
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def run(self):
-        jobs = []
-
         # prepare...
         for item in self.schedule.items:
             target = SemaphoreSchedulerItem(item, self.verbose)
             job = multiprocessing.Process(name=item.name, target=target.run)
             job.daemon = True
 
-            jobs.append(job)
+            self.__jobs.append(job)
 
         # run...
-        for job in jobs:
+        for job in self.__jobs:
             job.start()
 
         # wait...
-        if len(jobs) > 0:
-            jobs[0].join()
+        if len(self.__jobs) > 0:
+            self.__jobs[0].join()
+
+
+    def terminate(self):
+        for job in self.__jobs:
+            job.terminate()
 
 
     # ----------------------------------------------------------------------------------------------------------------
