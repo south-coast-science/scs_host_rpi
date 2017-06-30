@@ -13,8 +13,6 @@ import time
 
 import posix_ipc
 
-from abc import abstractmethod
-
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -35,12 +33,7 @@ class ScheduleRunner(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    @abstractmethod
-    def sample(self):
-        pass
-
-
-    def samples(self):
+    def samples(self, sampler):
         sem = posix_ipc.Semaphore(self.name, flags=posix_ipc.O_CREAT)
 
         # reset...
@@ -56,7 +49,7 @@ class ScheduleRunner(object):
                     print('%s: start' % self.name, file=sys.stderr)
                     sys.stderr.flush()
 
-                yield self.sample()
+                yield sampler.sample()
 
             finally:
                 # done...
@@ -67,6 +60,12 @@ class ScheduleRunner(object):
                     sys.stderr.flush()
 
                 time.sleep(0.1)   # must be longer than the release period and shorter than the sampling interval
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def reset(self):
+        pass
 
 
     # ----------------------------------------------------------------------------------------------------------------

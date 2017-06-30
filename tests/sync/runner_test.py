@@ -9,47 +9,55 @@ Created on 28 Jun 2017
 import sys
 
 from scs_core.data.localized_datetime import LocalizedDatetime
-
+from scs_core.sampler.sampler import Sampler
 from scs_host.sync.schedule_runner import ScheduleRunner
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class TestRunner(ScheduleRunner):
+class TestSampler(Sampler):
     """
     classdocs
     """
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, name):
+    def __init__(self, runner):
         """
         Constructor
         """
-        ScheduleRunner.__init__(self, name, True)
+        Sampler.__init__(self, runner)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def sample(self):
-        return 'SAMPLE ' + LocalizedDatetime.now().as_iso8601()
+        return 'SAMPLE: ' + LocalizedDatetime.now().as_iso8601()
+
+
+    def reset(self):
+        pass
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "TestRunner:{name:%s}" % self.name
+        return "TestSampler:{runner:%s}" % self.runner
 
 
 # --------------------------------------------------------------------------------------------------------------------
 # run...
 
-runner = TestRunner('scs-gases')
-print(runner, file=sys.stderr)
+schedule_runner = ScheduleRunner('scs-gases', True)
+print(schedule_runner, file=sys.stderr)
+
+sampler = TestSampler(schedule_runner)
+print(sampler, file=sys.stderr)
+
 sys.stderr.flush()
 
 try:
-    for sample in runner.samples():
+    for sample in sampler.samples():
         print(sample, file=sys.stderr)
         sys.stderr.flush()
 
