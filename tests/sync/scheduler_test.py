@@ -13,7 +13,7 @@ from collections import OrderedDict
 from scs_core.sync.schedule import Schedule
 from scs_core.sync.schedule import ScheduleItem
 
-from scs_host.sync.semaphore_scheduler import SemaphoreScheduler
+from scs_host.sync.scheduler import Scheduler
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -38,12 +38,12 @@ print("-")
 
 # --------------------------------------------------------------------------------------------------------------------
 
-heartbeat = SemaphoreScheduler(schedule, True)
-print(heartbeat)
+scheduler = Scheduler(schedule, True)
+print(scheduler)
 print("-")
 
 try:
-    heartbeat.run()
+    scheduler.run()
 
 except KeyboardInterrupt:
     pass

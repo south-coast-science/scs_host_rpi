@@ -18,7 +18,7 @@ from abc import abstractmethod
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class SemaphoreSampler(object):
+class ScheduleRunner(object):
     """
     classdocs
     """
@@ -84,4 +84,4 @@ class SemaphoreSampler(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "SemaphoreSampler:{name:%s, verbose:%s}" % (self.name, self.verbose)
+        return "ScheduleRunner:{name:%s, verbose:%s}" % (self.name, self.verbose)

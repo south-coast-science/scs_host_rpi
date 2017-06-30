@@ -10,12 +10,12 @@ import sys
 
 from scs_core.data.localized_datetime import LocalizedDatetime
 
-from scs_host.sync.semaphore_sampler import SemaphoreSampler
+from scs_host.sync.schedule_runner import ScheduleRunner
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class TestSampler(SemaphoreSampler):
+class TestRunner(ScheduleRunner):
     """
     classdocs
     """
@@ -26,7 +26,7 @@ class TestSampler(SemaphoreSampler):
         """
         Constructor
         """
-        SemaphoreSampler.__init__(self, name, True)
+        ScheduleRunner.__init__(self, name, True)
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -38,18 +38,18 @@ class TestSampler(SemaphoreSampler):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "TestSampler:{name:%s}" % self.name
+        return "TestRunner:{name:%s}" % self.name
 
 
 # --------------------------------------------------------------------------------------------------------------------
 # run...
 
-sampler = TestSampler('scs-gases')
-print(sampler, file=sys.stderr)
+runner = TestRunner('scs-gases')
+print(runner, file=sys.stderr)
 sys.stderr.flush()
 
 try:
-    for sample in sampler.samples():
+    for sample in runner.samples():
         print(sample, file=sys.stderr)
         sys.stderr.flush()
 

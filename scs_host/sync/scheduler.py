@@ -21,7 +21,7 @@ from scs_core.sync.interval_timer import IntervalTimer
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class SemaphoreScheduler(object):
+class Scheduler(object):
     """
     classdocs
     """
@@ -43,7 +43,7 @@ class SemaphoreScheduler(object):
     def run(self):
         # prepare...
         for item in self.schedule.items:
-            target = SemaphoreSchedulerItem(item, self.verbose)
+            target = SchedulerItem(item, self.verbose)
             job = multiprocessing.Process(name=item.name, target=target.run)
             job.daemon = True
 
@@ -78,12 +78,12 @@ class SemaphoreScheduler(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "SemaphoreScheduler:{schedule:%s, verbose:%s}" % (self.schedule, self.verbose)
+        return "Scheduler:{schedule:%s, verbose:%s}" % (self.schedule, self.verbose)
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class SemaphoreSchedulerItem(object):
+class SchedulerItem(object):
     """
     classdocs
     """
@@ -141,4 +141,4 @@ class SemaphoreSchedulerItem(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "SemaphoreSchedulerItem:{item:%s, verbose:%s}" % (self.item, self.verbose)
+        return "SchedulerItem:{item:%s, verbose:%s}" % (self.item, self.verbose)
