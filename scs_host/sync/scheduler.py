@@ -106,7 +106,7 @@ class SchedulerItem(object):
 
         while timer.true():
             if self.verbose:
-                print('%s: run: %s' % (self.item.name, LocalizedDatetime.now().as_iso8601()), file=sys.stderr)
+                print('%s: run' % self.item.name, file=sys.stderr)
                 sys.stderr.flush()
 
             # enable...
