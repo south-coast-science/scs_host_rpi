@@ -3,7 +3,7 @@ Created on 28 Jun 2017
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
-Warning: only one sampler per semaphore
+Warning: only one sampler per semaphore!
 
 http://semanchuk.com/philip/posix_ipc/#semaphore
 """
@@ -13,10 +13,12 @@ import time
 
 import posix_ipc
 
+from scs_core.sync.runner import Runner
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class ScheduleRunner(object):
+class ScheduleRunner(Runner):
     """
     classdocs
     """
@@ -33,12 +35,18 @@ class ScheduleRunner(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    def reset(self):
+        sem = posix_ipc.Semaphore(self.name, flags=posix_ipc.O_CREAT)
+
+        while sem.value > 0:
+            sem.acquire()           # clear excessive semaphore counts
+
+
     def samples(self, sampler):
         sem = posix_ipc.Semaphore(self.name, flags=posix_ipc.O_CREAT)
 
         # reset...
-        while sem.value > 0:
-            sem.acquire()
+        self.reset()
 
         while True:
             try:
@@ -59,13 +67,7 @@ class ScheduleRunner(object):
                     print('%s: done' % self.name, file=sys.stderr)
                     sys.stderr.flush()
 
-                time.sleep(0.1)   # must be longer than the release period and shorter than the sampling interval
-
-
-    # ----------------------------------------------------------------------------------------------------------------
-
-    def reset(self):
-        pass
+                time.sleep(0.1)     # must be longer than the release period and shorter than the sampling interval
 
 
     # ----------------------------------------------------------------------------------------------------------------

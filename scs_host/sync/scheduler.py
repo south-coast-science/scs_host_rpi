@@ -3,7 +3,7 @@ Created on 28 Jun 2017
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
-Warning: only one sampler per semaphore
+Warning: only one sampler per semaphore!
 
 http://semanchuk.com/philip/posix_ipc/#semaphore
 https://pymotw.com/2/multiprocessing/basics.html
