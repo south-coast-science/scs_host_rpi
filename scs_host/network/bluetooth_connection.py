@@ -45,17 +45,17 @@ class BluetoothConnection(Process):
             raise RuntimeError("BluetoothConnection.monitor: a connection instance is already running.")
 
         # construct connection...
-        output, input = Pipe()
+        pipe_output, pipe_input = Pipe()
 
-        BluetoothConnection.__conn = BluetoothConnection(input)
+        BluetoothConnection.__conn = BluetoothConnection(pipe_input)
         BluetoothConnection.__conn.start()
 
-        input.close()
+        pipe_input.close()
 
         # monitor...
         while True:
             try:
-                state = output.recv()
+                state = pipe_output.recv()
 
                 if state == BluetoothConnection.FAILED:
                     # BluetoothConnection.__conn.terminate() - this causes a problem in a use case that I can't remember

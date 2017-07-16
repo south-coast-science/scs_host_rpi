@@ -85,10 +85,10 @@ class BluetoothSerial(Process):
         return data
 
 
-    def __write(self, str):
+    def __write(self, chars):
         fout = open('/dev/rfcomm0', 'w')
 
-        print(str, file=fout)
+        print(chars, file=fout)
         fout.flush()
 
         fout.close()
