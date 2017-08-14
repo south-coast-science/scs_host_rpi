@@ -43,7 +43,7 @@ auth = ClientAuth.load_from_host(Host)
 
 if auth is None:
     print("ClientAuth not available.", file=sys.stderr)
-    exit()
+    exit(1)
 
 print("auth: %s" % auth)
 print("-")
