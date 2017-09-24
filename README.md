@@ -3,5 +3,5 @@ Host abstractions for data producers or consumers running Raspian on the Raspber
 
 **Required libraries:** 
 
-* Third party: posix_ipc, pycurl, spidev
+* Third party: paho-mqtt, posix_ipc, pycurl, spidev
 * SCS root: scs_core

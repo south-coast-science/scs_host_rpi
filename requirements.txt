@@ -1,3 +1,4 @@
+paho-mqtt
 posix_ipc
 pycurl
 spidev
