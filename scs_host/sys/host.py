@@ -11,12 +11,14 @@ import re
 import socket
 import subprocess
 
+from scs_core.sys.node import Node
+
 from scs_host.sys.mcu_datum import MCUDatum
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class Host(object):
+class Host(Node):
     """
     Broadcom BCM2837 64bit ARMv7 quad core processor
     """
@@ -40,6 +42,7 @@ class Host(object):
     __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
 
     __SCS_CONF =        "/home/pi/SCS/conf/"                # hard-coded path
+    __SCS_AWS =         "/home/pi/SCS/aws/"                 # hard-coded path
     __SCS_OSIO =        "/home/pi/SCS/osio/"                # hard-coded path
 
 
@@ -99,6 +102,11 @@ class Host(object):
     @classmethod
     def conf_dir(cls):
         return cls.__SCS_CONF
+
+
+    @classmethod
+    def aws_dir(cls):
+        return cls.__SCS_AWS
 
 
     @classmethod
