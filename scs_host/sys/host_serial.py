@@ -40,11 +40,11 @@ class HostSerial(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def read_line(self, terminator, timeout):
+    def read_line(self, eol, timeout):
         raise NotImplementedError
 
 
-    def write_line(self, text):
+    def write_line(self, text, eol=None):
         raise NotImplementedError
 
 
