@@ -30,7 +30,7 @@ class HostSerial(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def open(self, timeout):
+    def open(self, lock_timeout, comms_timeout):
         raise NotImplementedError
 
 
