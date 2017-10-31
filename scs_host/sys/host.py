@@ -41,9 +41,11 @@ class Host(Node):
 
     __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
 
-    __SCS_CONF =        "/home/pi/SCS/conf/"                # hard-coded path
-    __SCS_AWS =         "/home/pi/SCS/aws/"                 # hard-coded path
-    __SCS_OSIO =        "/home/pi/SCS/osio/"                # hard-coded path
+    __SCS =             "/home/pi/SCS/"                     # hard-coded path
+
+    __SCS_CONF =        "conf/"                             # hard-coded path
+    __SCS_AWS =         "aws/"                              # hard-coded path
+    __SCS_OSIO =        "osio/"                             # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -88,8 +90,18 @@ class Host(Node):
     # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
+    def gps_device(cls):
+        raise NotImplementedError
+
+
+    @classmethod
     def ndir_device(cls):
         return cls.__NDIR_DEVICE            # we might have to search for it instead
+
+
+    @classmethod
+    def psu_device(cls):
+        raise NotImplementedError
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -97,6 +109,11 @@ class Host(Node):
     @classmethod
     def name(cls):
         return socket.gethostname()
+
+
+    @classmethod
+    def scs_dir(cls):
+        return cls.__SCS
 
 
     @classmethod
