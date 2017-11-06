@@ -28,7 +28,7 @@ class Host(Node):
 
     DFE_EEPROM_ADDR =   0x50
 
-    COMMAND_DIR =       "/home/pi/SCS/cmd"                 # hard-coded path
+    COMMAND_DIR =       "/home/pi/SCS/cmd"                  # hard-coded path
 
     DFE_EEP_IMAGE =     "/home/pi/SCS/hat.eep"              # hard-coded path
 
@@ -118,14 +118,14 @@ class Host(Node):
 
     @classmethod
     def conf_dir(cls):
-        return cls.__SCS_CONF
+        return cls.__SCS + cls.__SCS_CONF
 
 
     @classmethod
     def aws_dir(cls):
-        return cls.__SCS_AWS
+        return cls.__SCS + cls.__SCS_AWS
 
 
     @classmethod
     def osio_dir(cls):
-        return cls.__SCS_OSIO
+        return cls.__SCS + cls.__SCS_OSIO
