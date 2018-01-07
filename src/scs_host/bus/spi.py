@@ -9,63 +9,72 @@ http://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspb
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 """
 
-import spidev
+from spidev import SpiDev
+
+from scs_host.lock.lock import Lock
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class HostSPI(object):
+class SPI(object):
     """
     classdocs
     """
-    __BUS = 0
+    __LOCK_TIMEOUT =        1.0
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, device, mode, max_speed):
+    def __init__(self, bus, device, mode, max_speed):
         """
         Constructor
         """
 
+        self.__bus = bus
         self.__device = device
         self.__mode = mode
         self.__max_speed = max_speed
 
-        self.__bus = None
+        self.__connection = None
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self):
-        if self.__bus:
+        if self.__connection:
             return
 
-        self.__bus = spidev.SpiDev(HostSPI.__BUS, self.__device)
+        Lock.acquire(SPI.__name__ + self.__bus, SPI.__LOCK_TIMEOUT)
 
-        self.__bus.mode = self.__mode
-        self.__bus.max_speed_hz = self.__max_speed
+        self.__connection = SpiDev()
+        self.__connection.open(self.__bus, self.__device)
+
+        self.__connection.mode = self.__mode
+        self.__connection.max_speed_hz = self.__max_speed
 
 
     def close(self):
-        if self.__bus is None:
+        if self.__connection is None:
             return
 
-        self.__bus.close()
-        self.__bus = None
+        self.__connection.close()
+        self.__connection = None
 
+        Lock.release(SPI.__name__ + self.__bus)
+
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     def xfer(self, args):
-        self.__bus.xfer(args)
+        self.__connection.xfer(args)
 
 
     def read_bytes(self, count):
-        return self.__bus.readbytes(count)
+        return self.__connection.readbytes(count)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "HostSPI:{device:%s, mode:%d, max_speed:%d}" % (self.__device, self.__mode, self.__max_speed)
-
-
-
+        return "SPI:{bus:%d, device:%s, mode:%d, max_speed:%d, connection:%s}" % \
+               (self.__bus, self.__device, self.__mode, self.__max_speed, self.__connection)

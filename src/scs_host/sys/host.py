@@ -23,29 +23,35 @@ class Host(Node):
     Broadcom BCM2837 64bit ARMv7 quad core processor
     """
 
-    I2C_EEPROM =        3
-    I2C_SENSORS =       1
+    I2C_EEPROM =            3
+    I2C_SENSORS =           1
 
-    DFE_EEPROM_ADDR =   0x50
+    DFE_EEPROM_ADDR =       0x50
 
-    COMMAND_DIR =       "/home/pi/SCS/cmd"                  # hard-coded path
+    COMMAND_DIR =           "/home/pi/SCS/cmd"                  # hard-coded path
 
-    DFE_EEP_IMAGE =     "/home/pi/SCS/hat.eep"              # hard-coded path
+    DFE_EEP_IMAGE =         "/home/pi/SCS/hat.eep"              # hard-coded path
 
-    SCS_LOCK =          "/run/lock/southcoastscience/"      # hard-coded path
+    SCS_LOCK =              "/run/lock/southcoastscience/"      # hard-coded path
 
-    SCS_TMP =           "/tmp/southcoastscience/"           # hard-coded path
+    SCS_TMP =               "/tmp/southcoastscience/"           # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
+    __OPC_SPI_BUS =         0                                   # based on spidev
+    __OPC_SPI_DEVICE =      0                                   # based on spidev
 
-    __SCS =             "/home/pi/SCS/"                     # hard-coded path
+    __NDIR_SPI_BUS =        0                                   # based on spidev
+    __NDIR_SPI_DEVICE =     1                                   # based on spidev
 
-    __SCS_CONF =        "conf/"                             # hard-coded path
-    __SCS_AWS =         "aws/"                              # hard-coded path
-    __SCS_OSIO =        "osio/"                             # hard-coded path
+    __NDIR_USB_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
+
+    __SCS =                 "/home/pi/SCS/"                     # hard-coded path
+
+    __SCS_CONF =            "conf/"                             # hard-coded path
+    __SCS_AWS =             "aws/"                              # hard-coded path
+    __SCS_OSIO =            "osio/"                             # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -95,8 +101,8 @@ class Host(Node):
 
 
     @classmethod
-    def ndir_device(cls):
-        return cls.__NDIR_DEVICE            # we might have to search for it instead
+    def ndir_usb_device(cls):
+        return cls.__NDIR_USB_DEVICE            # we might have to search for it instead
 
 
     @classmethod
@@ -110,6 +116,30 @@ class Host(Node):
     def name(cls):
         return socket.gethostname()
 
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def ndir_spi_bus(cls):
+        return cls.__NDIR_SPI_BUS
+
+
+    @classmethod
+    def ndir_spi_device(cls):
+        return cls.__NDIR_SPI_DEVICE
+
+
+    @classmethod
+    def opc_spi_bus(cls):
+        return cls.__OPC_SPI_BUS
+
+
+    @classmethod
+    def opc_spi_device(cls):
+        return cls.__OPC_SPI_DEVICE
+
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
     def scs_dir(cls):
