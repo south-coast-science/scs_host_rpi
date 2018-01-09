@@ -11,6 +11,9 @@ speed: /etc/modprobe.d/I2C.conf
 
 http://ftp.de.debian.org/debian/pool/main/i/i2c-tools/
 file: i2c-tools-3.1.1/include/linux/i2c-dev.h
+
+Note that there is a bug in raspian-stretch:
+https://github.com/raspberrypi/firmware/issues/828
 """
 
 import fcntl
@@ -110,8 +113,8 @@ class I2C(object):
         write_bytes = bytearray()
 
         for value16 in value16s:
-            write_bytes.append(value16 >> 8)
-            write_bytes.append(value16 & 0xff)
+            write_bytes += bytes([value16 >> 8])
+            write_bytes += bytes([value16 & 0xff])
 
         I2C.__FW.write(write_bytes)
 
