@@ -11,6 +11,9 @@ speed: /etc/modprobe.d/I2C.conf
 
 http://ftp.de.debian.org/debian/pool/main/i/i2c-tools/
 file: i2c-tools-3.1.1/include/linux/i2c-dev.h
+
+Note that there is a bug in raspian-stretch:
+https://github.com/raspberrypi/firmware/issues/828
 """
 
 import fcntl
