@@ -23,6 +23,8 @@ class Host(Node):
     Broadcom BCM2837 64bit ARMv7 quad core processor
     """
 
+    OS_ENV_PATH =           'SCS_ROOT_PATH'
+
     I2C_EEPROM =            3
     I2C_SENSORS =           1
 
@@ -147,7 +149,7 @@ class Host(Node):
 
     @classmethod
     def home_dir(cls):
-        return os.environ['SCS_ROOT_PATH'] if 'SCS_ROOT_PATH' in os.environ else cls.__DEFAULT_HOME_DIR
+        return os.environ[cls.OS_ENV_PATH] if cls.OS_ENV_PATH in os.environ else cls.__DEFAULT_HOME_DIR
 
 
     @classmethod
