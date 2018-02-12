@@ -30,8 +30,8 @@ class Lock(object):
         Should be invoked on class load.
         """
         try:
-            os.mkdir(Host.SCS_LOCK)
-            os.chmod(Host.SCS_LOCK, 0o777)
+            os.mkdir(Host.lock_dir())
+            os.chmod(Host.lock_dir(), 0o777)
         except FileExistsError:
             pass
 
@@ -153,7 +153,7 @@ class Lock(object):
 
     @classmethod
     def __name_dir(cls, name):
-        return Host.SCS_LOCK + name
+        return os.path.join(Host.lock_dir(), name)
 
 
     @classmethod
