@@ -79,11 +79,6 @@ class Host(Node):
 
 
     @staticmethod
-    def power_cycle():
-        subprocess.call(['sudo', 'reboot'])
-
-
-    @staticmethod
     def enable_eeprom_access():
         subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
@@ -97,6 +92,11 @@ class Host(Node):
         temp = float(message)
 
         return MCUDatum(temp)
+
+
+    @classmethod
+    def shutdown(cls):
+        subprocess.call(['sudo', 'shutdown', 'now'])
 
 
     # ----------------------------------------------------------------------------------------------------------------
