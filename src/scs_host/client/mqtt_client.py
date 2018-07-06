@@ -159,4 +159,4 @@ class MQTTSubscriber(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "MQTTSubscriber:{topic:%s, handler:%s}" % (self.topic, self.handler)
+        return "MQTTSubscriber:{topic:%s, handler:%s}" % (self.topic, self.handler.__self__)
