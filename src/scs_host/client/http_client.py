@@ -35,8 +35,6 @@ class HTTPClient(object):
 
     def connect(self, host, secure=True, verified=True, timeout=None):
         if secure:
-            # print("verified: %s" % verified)
-
             if verified:
                 context = None
             else:
