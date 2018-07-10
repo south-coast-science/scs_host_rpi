@@ -2,7 +2,11 @@
 Created on 9 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+https://stackoverflow.com/questions/33770129/how-do-i-disable-the-ssl-check-in-python-3-x
 """
+
+import ssl
 
 import http.client
 
@@ -29,16 +33,25 @@ class HTTPClient(object):
         self.__host = None
 
 
-    def connect(self, host, timeout=None, secure=True):
-        if timeout:
-            if secure:
-                self.__conn = http.client.HTTPSConnection(host, timeout=timeout)
+    def connect(self, host, secure=True, verified=True, timeout=None):
+        if secure:
+            if verified:
+                context = None
             else:
-                self.__conn = http.client.HTTPConnection(host, timeout=timeout)
+                context = ssl.create_default_context()
+                context.check_hostname = False
+                context.verify_mode = ssl.CERT_NONE
+
+            # print("context: %s" % context)
+
+            if timeout:
+                self.__conn = http.client.HTTPSConnection(host, context=context, timeout=timeout)
+            else:
+                self.__conn = http.client.HTTPSConnection(host, context=context)
 
         else:
-            if secure:
-                self.__conn = http.client.HTTPSConnection(host)
+            if timeout:
+                self.__conn = http.client.HTTPConnection(host, timeout=timeout)
             else:
                 self.__conn = http.client.HTTPConnection(host)
 
