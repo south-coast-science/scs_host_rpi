@@ -120,7 +120,7 @@ class SchedulerItem(object):
 
             try:
                 # disable...
-                self.__mutex.acquire(self.item.interval)
+                self.__mutex.acquire(self.item.interval)        # TODO: what happens if semaphore cannot be acquired?
 
             except BusyError:
                 # release...
