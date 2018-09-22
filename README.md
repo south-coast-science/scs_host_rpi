@@ -16,4 +16,6 @@ The stable branch of this repository is master. For deployment purposes, use:
     git clone --branch=master https://github.com/south-coast-science/scs_host_rpi.git
 
 
+**Resources:**
+
 http://www.raspberry-projects.com/pi/programming-in-c/security/open-ssl-c-library/installing-openssl-c-library
