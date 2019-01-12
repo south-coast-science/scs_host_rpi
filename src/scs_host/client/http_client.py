@@ -34,6 +34,8 @@ class HTTPClient(object):
 
 
     def connect(self, host, secure=True, verified=True, timeout=None):
+        print("connect: host: %s" % host)
+
         if secure:
             if verified:
                 context = None
@@ -69,6 +71,8 @@ class HTTPClient(object):
         # data...
         params = None if payload is None else urllib.parse.urlencode(payload)
         query = path if params is None else path + '?' + params
+
+        print("get: query: %s" % query)
 
         # request...
         self.__conn.request("GET", query, None, headers)
