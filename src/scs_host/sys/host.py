@@ -17,6 +17,8 @@ from scs_core.sys.node import Node
 from scs_host.sys.mcu_datum import MCUDatum
 
 
+# TODO: fix EEPROM access
+
 # --------------------------------------------------------------------------------------------------------------------
 
 class Host(Node):
