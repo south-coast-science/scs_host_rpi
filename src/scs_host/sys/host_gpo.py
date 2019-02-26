@@ -18,22 +18,22 @@ class HostGPO(HostGPIO):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, pin, state):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     @property
     def state(self):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     @state.setter
     def state(self, state):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        raise NotImplementedError
+        raise NotImplementedError()

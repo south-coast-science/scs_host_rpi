@@ -106,7 +106,7 @@ class Host(Node):
 
     @classmethod
     def gps_device(cls):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     @classmethod
@@ -116,7 +116,7 @@ class Host(Node):
 
     @classmethod
     def psu_device(cls):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------

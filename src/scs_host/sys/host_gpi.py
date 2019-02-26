@@ -18,22 +18,22 @@ class HostGPI(HostGPIO):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, pin):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     @property
     def state(self):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     def wait(self, edge):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        raise NotImplementedError
+        raise NotImplementedError()
 
