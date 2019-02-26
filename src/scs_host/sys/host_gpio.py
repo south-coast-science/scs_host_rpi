@@ -25,24 +25,24 @@ class HostGPIO(object):
 
     @staticmethod
     def cleanup():
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     @staticmethod
     def setup(pin, direction):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     @staticmethod
     def input(pin):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     @staticmethod
     def output(pin, direction):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     @staticmethod
     def wait_for_edge(pin, edge):
-        raise NotImplementedError
+        raise NotImplementedError()

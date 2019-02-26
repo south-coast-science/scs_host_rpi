@@ -31,21 +31,21 @@ class HostSerial(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self, lock_timeout, comms_timeout):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     def close(self):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def read_line(self, eol, timeout):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     def write_line(self, text, eol=None):
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
     # ----------------------------------------------------------------------------------------------------------------
