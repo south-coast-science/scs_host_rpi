@@ -70,7 +70,7 @@ class Host(Node):
         cpuinfo = os.popen("cat /proc/cpuinfo").readlines()
         line = cpuinfo[-1]
 
-        match = re.match('Serial\s*:\s*([0-9A-Fa-f]+)', line)
+        match = re.match(r'Serial\s*:\s*([0-9A-Fa-f]+)', line)
 
         if match is None:
             return None
