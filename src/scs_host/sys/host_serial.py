@@ -18,7 +18,7 @@ class HostSerial(Serial):
     classdocs
     """
 
-    __PORT_PREFIX =     "/dev/ttyS"              # hard-coded path
+    __PORT_PREFIX =     "/dev/ttyS"                 # hard-coded path
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -38,10 +38,8 @@ class HostSerial(Serial):
         # lock...
         Lock.acquire(self.__lock_name, lock_timeout)
 
-        # port...
-        port = HostSerial.__PORT_PREFIX + str(self._port_number)
-
-        self._ser = serial.Serial(port=port, baudrate=self._baud_rate, timeout=comms_timeout,
+        # serial...
+        self._ser = serial.Serial(port=self.port, baudrate=self._baud_rate, timeout=comms_timeout,
                                   parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
 
 
@@ -60,12 +58,12 @@ class HostSerial(Serial):
     # ----------------------------------------------------------------------------------------------------------------
 
     @property
-    def __lock_name(self):
-        return HostSerial.__name__ + "-" + str(self._port_number)
+    def port(self):
+        return self.__PORT_PREFIX + str(self._port_number)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __str__(self, *args, **kwargs):
-        return "HostSerial:{port_number:%d, baud_rate=%d, hard_handshake=%s, serial:%s}" % \
-                    (self._port_number, self._baud_rate, self._hard_handshake, self._ser)
+    @property
+    def __lock_name(self):
+        return self.__class__.__name__ + "-" + str(self._port_number)
