@@ -2,6 +2,8 @@
 Created on 19 Mar 2019
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+Warning: for Raspberry Pi systems, dev/ttyAMA0 (a.k.a. /dev/ttyS0) must not be a serial console, and must be enabled.
 """
 
 import serial
