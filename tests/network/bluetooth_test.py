@@ -22,6 +22,7 @@ class EchoHandler(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    # noinspection PyMethodMayBeStatic
     def respond(self, command):
         message = None
         error = None

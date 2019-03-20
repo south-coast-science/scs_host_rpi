@@ -1,19 +1,26 @@
 """
-Created on 10 Jan 2017
+Created on 19 Mar 2019
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+Warning: for Raspberry Pi systems, dev/ttyAMA0 (a.k.a. /dev/ttyS0) must not be a serial console, and must be enabled.
 """
 
+import serial
 
-# TODO: implement HostSerial
-# TODO: add lock functionality
+from scs_core.sys.serial import Serial
+
+from scs_host.lock.lock import Lock
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class HostSerial(object):
+class HostSerial(Serial):
     """
     classdocs
     """
+
+    __PORT_PREFIX =     "/dev/ttyS"                 # hard-coded path
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -21,35 +28,44 @@ class HostSerial(object):
         """
         Constructor
         """
-        self.__port_number = port_number
-        self.__baud_rate = baud_rate
-        self.__hard_handshake = hard_handshake
+        super().__init__(port_number, baud_rate, hard_handshake)
 
-        self.__ser = None
+        if hard_handshake:
+            raise NotImplementedError("hard_handshake")
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self, lock_timeout, comms_timeout):
-        raise NotImplementedError()
+        # lock...
+        Lock.acquire(self.__lock_name, lock_timeout)
+
+        # serial...
+        self._ser = serial.Serial(port=self.port, baudrate=self._baud_rate, timeout=comms_timeout,
+                                  parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
 
 
     def close(self):
-        raise NotImplementedError()
+        try:
+            # port...
+            if self._ser:
+                self._ser.close()
+                self._ser = None
+
+        finally:
+            # lock...
+            Lock.release(self.__lock_name)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def read_line(self, eol, timeout):
-        raise NotImplementedError()
-
-
-    def write_line(self, text, eol=None):
-        raise NotImplementedError()
+    @property
+    def port(self):
+        return self.__PORT_PREFIX + str(self._port_number)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __str__(self, *args, **kwargs):
-        return "HostSerial:{port_number:%d, baud_rate=%d, hard_handshake=%s, serial:%s}" % \
-                    (self.__port_number, self.__baud_rate, self.__hard_handshake, self.__ser)
+    @property
+    def __lock_name(self):
+        return self.__class__.__name__ + "-" + str(self._port_number)
