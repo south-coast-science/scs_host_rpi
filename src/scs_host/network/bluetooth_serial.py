@@ -85,6 +85,7 @@ class BluetoothSerial(Process):
         return data
 
 
+    # noinspection PyMethodMayBeStatic
     def __write(self, chars):
         fout = open('/dev/rfcomm0', 'w')
 
