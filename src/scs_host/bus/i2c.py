@@ -91,8 +91,12 @@ class I2C(object):
 
 
     @classmethod
-    def read_cmd(cls, cmd, count):
+    def read_cmd(cls, cmd, count, wait=None):
         cls.write(cmd)
+
+        if wait is not None:
+            time.sleep(wait)
+
         return cls.read(count)
 
 
