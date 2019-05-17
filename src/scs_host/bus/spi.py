@@ -75,6 +75,18 @@ class SPI(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    @property
+    def bus(self):
+        return self.__bus
+
+
+    @property
+    def device(self):
+        return self.__device
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
     def __str__(self, *args, **kwargs):
         return "SPI:{bus:%d, device:%s, mode:%d, max_speed:%d, connection:%s}" % \
                (self.__bus, self.__device, self.__mode, self.__max_speed, self.__connection)
