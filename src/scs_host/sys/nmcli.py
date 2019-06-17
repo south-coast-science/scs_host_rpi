@@ -39,7 +39,7 @@ class NMCLi(JSONable):
         try:
             p = subprocess.Popen(['nmcli'], stdout=subprocess.PIPE)
             report = p.communicate()
-            lines = report.decode().split('\n')
+            lines = report[0].decode().split('\n')
 
         except FileNotFoundError:
             return None
@@ -50,10 +50,10 @@ class NMCLi(JSONable):
 
 
     @classmethod
-    def parse(cls, report):
+    def parse(cls, lines):
         connections = OrderedDict()
 
-        for line in report:
+        for line in lines:
             print("line: [%s]" % line)
 
             if line is None:
