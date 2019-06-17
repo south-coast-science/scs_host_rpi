@@ -53,6 +53,8 @@ class NMCLi(JSONable):
         connections = OrderedDict()
 
         for line in report:
+            print("line: [%s]" % line)
+
             if line is None:
                 continue
 
