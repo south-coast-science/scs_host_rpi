@@ -59,7 +59,7 @@ class NMCLi(JSONable):
             if line is None:
                 continue
 
-            match = re.match(r'([a-z]+[0-9]+): connected to (.+)$', line.decode().strip())
+            match = re.match(r'([a-z]+[0-9]+): connected to (.+)$', line.strip())
 
             if match is None:
                 continue
