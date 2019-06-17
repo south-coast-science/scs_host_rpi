@@ -39,11 +39,12 @@ class NMCLi(JSONable):
         try:
             p = subprocess.Popen(['nmcli'], stdout=subprocess.PIPE)
             report = p.communicate()
+            lines = report.decode().split('\n')
 
         except FileNotFoundError:
             return None
 
-        connections = cls.parse(report)
+        connections = cls.parse(lines)
 
         return NMCLi(connections)
 
@@ -58,7 +59,7 @@ class NMCLi(JSONable):
             if line is None:
                 continue
 
-            match = re.match(r'([a-z]+[0-9]+): connected to (.+)$', line.decode().strip())
+            match = re.match(r'([a-z]+[0-9]+): connected to (.+)$', line.strip())
 
             if match is None:
                 continue
