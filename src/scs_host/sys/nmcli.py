@@ -53,6 +53,7 @@ class NMCLi(JSONable):
         connections = OrderedDict()
 
         for line in report:
+            print("line:[%s]" % line)
             match = re.match(r'([a-z]+[0-9]+): connected to (.+)$', line.decode().strip())
 
             if match is None:
