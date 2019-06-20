@@ -54,7 +54,7 @@ class NMCLi(JSONable):
         connections = OrderedDict()
 
         for line in lines:
-            match = re.match(r'([a-z]+[0-9]+): connected to (.+)$', line.strip())
+            match = re.match(r'([^: ]+): connected to (.+)$', line.strip())
 
             if match is None:
                 continue
