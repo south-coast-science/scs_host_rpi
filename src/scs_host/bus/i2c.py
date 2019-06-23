@@ -87,7 +87,7 @@ class I2C(object):
     @classmethod
     def read(cls, count):
         if count == 0:
-            return None
+            return []
 
         read_bytes = list(I2C.__FR.read(count))
 

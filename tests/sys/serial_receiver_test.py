@@ -29,4 +29,3 @@ except KeyboardInterrupt:
 finally:
     if serial:
         serial.close()
-
