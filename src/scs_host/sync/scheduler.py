@@ -25,7 +25,7 @@ class Scheduler(object):
     classdocs
     """
 
-    DELAY_STEP =                    1.0     # a nasty hack to stop everything happening at once
+    DELAY_STEP =                    0.5     # a nasty hack to stop everything happening at once
 
     RELEASE_PERIOD =                0.3     # ScheduleItem release period
     HOLD_PERIOD =                   0.6     # ScheduleRunner hold period
