@@ -20,7 +20,7 @@ class HostSerial(Serial):
     classdocs
     """
 
-    __PORT_PREFIX =     "/dev/ttyS"                 # hard-coded path
+    __PORT_PREFIX =     "/dev/serial"                 # hard-coded path
 
     # ----------------------------------------------------------------------------------------------------------------
 
