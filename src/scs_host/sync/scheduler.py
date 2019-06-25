@@ -25,6 +25,8 @@ class Scheduler(object):
     classdocs
     """
 
+    DELAY_STEP =                    1.0     # a nasty hack to stop everything happening at once
+
     RELEASE_PERIOD =                0.3     # ScheduleItem release period
     HOLD_PERIOD =                   0.6     # ScheduleRunner hold period
 
@@ -54,7 +56,7 @@ class Scheduler(object):
 
             self.__jobs.append(job)
 
-            delay += 1.0
+            delay += self.DELAY_STEP
 
         # run...
         for job in self.__jobs:
