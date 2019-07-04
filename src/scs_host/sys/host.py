@@ -45,7 +45,7 @@ class Host(Node):
     __NDIR_SPI_DEVICE =     1                                   # based on spidev
 
     __NDIR_USB_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
-    __GPS_SERIAL_DEVICE =   0                                   # hard-coded path
+    __GPS_SERIAL_DEVICE =   0                                   # hard-coded path (should be 0 on full-fat pies)
 
 
     # ----------------------------------------------------------------------------------------------------------------
