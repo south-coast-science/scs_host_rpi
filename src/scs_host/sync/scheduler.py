@@ -116,7 +116,7 @@ class SchedulerItem(object):
         timer = IntervalTimer(self.item.interval)
 
         while timer.true():
-            time.sleep(self.delay)          # TODO: a hack(?) to stop the MQTT queue being battered
+            time.sleep(self.delay)
 
             if self.verbose:
                 print('%s: run' % self.item.name, file=sys.stderr)
