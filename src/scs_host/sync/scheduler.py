@@ -25,7 +25,7 @@ class Scheduler(object):
     classdocs
     """
 
-    DELAY_STEP =                    1.0     # (optional) delay between semaphores
+    DELAY_STEP =                    0.0     # optional delay between semaphores
 
     RELEASE_PERIOD =                0.3     # ScheduleItem release period
     HOLD_PERIOD =                   0.6     # ScheduleRunner hold period
@@ -116,7 +116,7 @@ class SchedulerItem(object):
         timer = IntervalTimer(self.item.interval)
 
         while timer.true():
-            time.sleep(self.delay)          # TODO: a hack(?) to stop the MQTT queue being battered
+            time.sleep(self.delay)
 
             if self.verbose:
                 print('%s: run' % self.item.name, file=sys.stderr)
