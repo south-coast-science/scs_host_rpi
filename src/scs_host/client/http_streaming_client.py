@@ -2,6 +2,8 @@
 Created on 20 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+sudo apt install python3-pycurl
 """
 
 import pycurl
