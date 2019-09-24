@@ -66,11 +66,16 @@ class SPI(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def acquire_lock(self):
-        Lock.acquire(SPI.__name__ + str(self.__bus), SPI.__LOCK_TIMEOUT)
+        Lock.acquire(self.__lock_name, SPI.__LOCK_TIMEOUT)
 
 
     def release_lock(self):
-        Lock.release(SPI.__name__ + str(self.__bus))
+        Lock.release(self.__lock_name)
+
+
+    @property
+    def __lock_name(self):
+        return SPI.__name__ + str(self.__bus)
 
 
     # ----------------------------------------------------------------------------------------------------------------
