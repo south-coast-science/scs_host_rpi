@@ -19,7 +19,7 @@ class BinarySemaphore(object):
     classdocs
     """
 
-    __INITIAL_ACQUISITION_TIME = 5.0  # seconds
+    DEFAULT_ACQUISITION_TIME = 5.0                    # seconds
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -34,14 +34,14 @@ class BinarySemaphore(object):
             return
 
         try:
-            self.__semaphore.acquire(self.__INITIAL_ACQUISITION_TIME)  # initial state: acquired by first creator
+            self.__semaphore.acquire(self.DEFAULT_ACQUISITION_TIME)   # initial state: acquired by first creator
         except (posix_ipc.BusyError, posix_ipc.SignalError):
             pass
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def acquire(self, timeout=None):  # None timeout = wait forever (dangerous)
+    def acquire(self, timeout=None):                    # None timeout = wait forever (dangerous)
         try:
             self.__semaphore.acquire(timeout)
 
@@ -52,7 +52,7 @@ class BinarySemaphore(object):
             pass
 
         while self.__semaphore.value > 0:
-            self.__semaphore.acquire()                  # limit the value to 0 or 1
+            self.__semaphore.acquire(self.DEFAULT_ACQUISITION_TIME)     # limit the value to 0 or 1
 
 
     def release(self):

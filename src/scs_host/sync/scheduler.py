@@ -9,11 +9,13 @@ http://semanchuk.com/philip/posix_ipc/#semaphore
 https://pymotw.com/2/multiprocessing/basics.html
 """
 
-import multiprocessing
 import sys
 import time
 
+from multiprocessing import Manager
+
 from scs_core.sync.interval_timer import IntervalTimer
+from scs_core.sync.synchronised_process import SynchronisedProcess
 
 from scs_host.sync.binary_semaphore import BinarySemaphore, BusyError
 
@@ -45,15 +47,18 @@ class Scheduler(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def run(self):
+    def start(self):
+        print("Scheduler.start", file=sys.stderr)
+        sys.stderr.flush()
+
         try:
             delay = 0.0
 
             # prepare...
             for item in self.schedule.items:
-                target = SchedulerItem(item, delay, self.verbose)
-                job = multiprocessing.Process(name=item.name, target=target.run)
-                job.daemon = True
+                job = SchedulerItem(item, delay, self.verbose)
+                # job = Process(name=item.name, target=target.run)
+                # job.daemon = True
 
                 self.__jobs.append(job)
 
@@ -64,16 +69,19 @@ class Scheduler(object):
                 job.start()
 
             # wait...
-            if len(self.__jobs) > 0:
-                self.__jobs[0].join()
+            # if len(self.__jobs) > 0:
+            #     self.__jobs[0].join()
 
         except (BrokenPipeError, KeyboardInterrupt):
             pass
 
 
-    def terminate(self):
+    def stop(self):
+        print("Scheduler.stop", file=sys.stderr)
+        sys.stderr.flush()
+
         for job in self.__jobs:
-            job.terminate()
+            job.stop()
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -96,7 +104,7 @@ class Scheduler(object):
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class SchedulerItem(object):
+class SchedulerItem(SynchronisedProcess):
     """
     classdocs
     """
@@ -107,6 +115,12 @@ class SchedulerItem(object):
         """
         Constructor
         """
+        manager = Manager()
+
+        SynchronisedProcess.__init__(self, manager.list())
+
+        self._value.append(True)
+
         self.__item = item                                  # ScheduleItem
         self.__delay = delay                                # float (seconds)
         self.__verbose = verbose                            # bool
@@ -115,23 +129,50 @@ class SchedulerItem(object):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # SynchronisedProcess implementation...
+
+    def start(self):
+        print("%s.start" % self.item.name, file=sys.stderr)
+        sys.stderr.flush()
+
+        try:
+            super().start()
+
+        except KeyboardInterrupt:
+            pass
+
+
+    def stop(self):
+        print("%s.stop" % self.item.name, file=sys.stderr)
+        sys.stderr.flush()
+
+        try:
+            try:
+                self.__mutex.acquire(BinarySemaphore.DEFAULT_ACQUISITION_TIME)      # attempt to re-capture the mutex
+            except BusyError:
+                pass
+
+            super().stop()
+
+        except (BrokenPipeError, KeyboardInterrupt):
+            pass
+
+
 
     def run(self):
-        try:
-            self.__mutex.acquire(self.item.interval)  # protect against initially-released semaphores
-        except BusyError:
-            pass
+        print("%s.run" % self.item.name, file=sys.stderr)
+        sys.stderr.flush()
 
         try:
             timer = IntervalTimer(self.item.interval)
 
             while timer.true():
-                if self.verbose:
-                    print('%s: run' % self.item.name, file=sys.stderr)
-                    sys.stderr.flush()
-
                 # enable...
                 self.__mutex.release()
+
+                if self.verbose:
+                    print('%s.run: released' % self.item.name, file=sys.stderr)
+                    sys.stderr.flush()
 
                 time.sleep(Scheduler.RELEASE_PERIOD)            # release period: hand semaphore to sampler
 
@@ -139,11 +180,14 @@ class SchedulerItem(object):
                     # disable...
                     self.__mutex.acquire(self.item.interval)
 
+                    print('%s.run: acquired' % self.item.name, file=sys.stderr)
+                    sys.stderr.flush()
+
                 except BusyError:
                     # release...
                     self.__mutex.release()
 
-                    print('%s: release' % self.item.name, file=sys.stderr)
+                    print('%s.run: released on busy' % self.item.name, file=sys.stderr)
                     sys.stderr.flush()
 
                 time.sleep(self.delay)
