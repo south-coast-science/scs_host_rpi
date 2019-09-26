@@ -48,7 +48,7 @@ class TestSampler(Sampler):
 # --------------------------------------------------------------------------------------------------------------------
 # run...
 
-schedule_runner = ScheduleRunner('scs-gases', True)
+schedule_runner = ScheduleRunner('scs-gases')
 print(schedule_runner, file=sys.stderr)
 
 sampler = TestSampler(schedule_runner)
