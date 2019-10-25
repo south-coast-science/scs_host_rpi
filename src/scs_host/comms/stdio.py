@@ -20,8 +20,8 @@ class StdIO(ProcessComms):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    @classmethod
-    def prompt(cls, prompt_str):
+    @staticmethod
+    def prompt(prompt_str):
         print(prompt_str, end="", file=sys.stderr)
         sys.stderr.flush()
 
