@@ -67,7 +67,7 @@ class BluetoothConnection(Process):
                 BluetoothConnection.__conn.join()
                 return
 
-            yield (state)
+            yield state
 
         BluetoothConnection.__conn.join()
 
