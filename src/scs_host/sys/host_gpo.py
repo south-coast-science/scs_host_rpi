@@ -28,6 +28,8 @@ class HostGPO(HostGPIO):
         raise NotImplementedError()
 
 
+    # noinspection PyUnresolvedReferences
+
     @state.setter
     def state(self, state):
         raise NotImplementedError()
