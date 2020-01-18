@@ -56,7 +56,7 @@ print("-")
 
 for i in range(10):
     payload = {'msg': message + str(i)}
-    success = client.publish(Publication(topic, payload), 10.0)
+    success = client.publish(Publication(topic, 0, payload), 10.0)
 
     print("success: %s payload: %s" % (success, payload))
 
