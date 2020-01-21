@@ -37,6 +37,7 @@ class MQTTClient(object):
     __PUB_QOS =     1
     __SUB_QOS =     1
 
+    __MESSAGE_PRIORITY = 0
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -54,7 +55,7 @@ class MQTTClient(object):
         payload = msg.payload.decode()
         payload_jdict = json.loads(payload)
 
-        subscriber.handler(Publication(subscriber.topic, payload_jdict))
+        subscriber.handler(Publication(subscriber.topic, cls.__MESSAGE_PRIORITY, payload_jdict))
 
 
     # ----------------------------------------------------------------------------------------------------------------
