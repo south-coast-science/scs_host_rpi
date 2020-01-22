@@ -44,7 +44,6 @@ print("-")
 
 try:
     scheduler.start()
-
     scheduler.join()
 
 except KeyboardInterrupt:
