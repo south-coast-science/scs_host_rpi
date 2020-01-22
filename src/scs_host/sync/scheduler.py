@@ -46,19 +46,20 @@ class Scheduler(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def start(self):
-        try:
-            proc = None
+        proc = None
 
+        try:
             for item in self.schedule.items:
                 job = SchedulerItem(item, self.verbose)
 
                 self.__jobs.append(job)
                 proc = job.start()
 
-            return proc             # return the last job process, or None
-
         except (BrokenPipeError, KeyboardInterrupt, SystemExit):
             pass
+
+        finally:
+            return proc                         # return the last job process, or None
 
 
     def stop(self):
