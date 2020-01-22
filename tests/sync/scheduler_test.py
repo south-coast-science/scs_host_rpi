@@ -43,10 +43,9 @@ print(scheduler)
 print("-")
 
 try:
-    proc = scheduler.start()
+    scheduler.start()
 
-    if proc is not None:
-        proc.join()
+    scheduler.join()
 
 except KeyboardInterrupt:
     pass
