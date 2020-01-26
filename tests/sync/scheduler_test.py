@@ -8,8 +8,6 @@ Created on 28 Jun 2017
 https://pymotw.com/2/multiprocessing/basics.html
 """
 
-import time
-
 from collections import OrderedDict
 
 from scs_core.sync.schedule import Schedule
@@ -46,9 +44,7 @@ print("-")
 
 try:
     scheduler.start()
-
-    while True:
-        time.sleep(1.0)
+    scheduler.join()
 
 except KeyboardInterrupt:
     pass
