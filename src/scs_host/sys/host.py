@@ -14,6 +14,7 @@ import subprocess
 from pathlib import Path
 
 from scs_core.sys.disk_usage import DiskUsage
+from scs_core.sys.ipv4_address import IPv4Address
 from scs_core.sys.node import Node
 
 from scs_host.sys.mcu_datum import MCUDatum
@@ -72,6 +73,12 @@ class Host(Node):
 
     __LATEST_UPDATE =       "latest_update.txt"                 # hard-coded rel path
     __DFE_EEP_IMAGE =       "dfe_cape.eep"                      # hard-coded rel path
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+    # host acting as DHCP server...
+
+    __SERVER_IPV4_ADDRESS = '172.22.15.1'                       # had-coded abs path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -148,6 +155,11 @@ class Host(Node):
     @classmethod
     def name(cls):
         return socket.gethostname()
+
+
+    @classmethod
+    def server_ipv4_address(cls):
+        return IPv4Address.construct(cls.__SERVER_IPV4_ADDRESS)
 
 
     # ----------------------------------------------------------------------------------------------------------------
