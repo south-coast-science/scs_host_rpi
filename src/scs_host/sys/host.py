@@ -161,6 +161,7 @@ class Host(Node):
     def server_ipv4_address(cls):
         return IPv4Address.construct(cls.__SERVER_ADDRESS)
 
+
     # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
