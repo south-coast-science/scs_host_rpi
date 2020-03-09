@@ -75,6 +75,12 @@ class Host(Node):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # host acting as DHCP server...
+
+    __SERVER_ADDRESS =      '172.22.15.1'                       # had-coded abs path
+
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
     def serial_number():
@@ -149,6 +155,10 @@ class Host(Node):
     def name(cls):
         return socket.gethostname()
 
+
+    @classmethod
+    def server_ip_address(cls):
+        return cls.__SERVER_ADDRESS
 
     # ----------------------------------------------------------------------------------------------------------------
 
