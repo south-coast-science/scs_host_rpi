@@ -19,7 +19,7 @@ path = "/v1/orgs/south-coast-science-dev/topics"
 
 # --------------------------------------------------------------------------------------------------------------------
 
-rest_client = RESTClient(HTTPClient(), api_key)
+rest_client = RESTClient(HTTPClient(False), api_key)
 rest_client.connect()
 print(rest_client)
 
