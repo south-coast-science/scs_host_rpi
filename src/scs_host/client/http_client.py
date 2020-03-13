@@ -2,8 +2,6 @@
 Created on 9 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-
-https://stackoverflow.com/questions/33770129/how-do-i-disable-the-ssl-check-in-python-3-x
 """
 
 import socket
@@ -29,39 +27,38 @@ class HTTPClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self):
+    def __init__(self, wait_for_network):
         """
         Constructor
         """
         self.__conn = None
         self.__host = None
 
+        self.__wait_for_network = wait_for_network
+
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     def connect(self, host, secure=True, verified=True, timeout=None):
         # print("connect: host: %s" % host)
 
         if secure:
-            if verified:
-                context = None
-            else:
-                context = ssl.create_default_context()
-                context.check_hostname = False
-                context.verify_mode = ssl.CERT_NONE
+            # noinspection PyProtectedMember
+            context = None if verified else ssl._create_unverified_context()
 
-            # print("context: %s" % context)
-
-            if timeout:
+            if timeout is not None:
                 self.__conn = http.client.HTTPSConnection(host, context=context, timeout=timeout)
             else:
                 self.__conn = http.client.HTTPSConnection(host, context=context)
 
         else:
-            if timeout:
+            if timeout is not None:
                 self.__conn = http.client.HTTPConnection(host, timeout=timeout)
             else:
                 self.__conn = http.client.HTTPConnection(host)
 
         self.__host = host
+
 
 
     def close(self):
@@ -79,10 +76,7 @@ class HTTPClient(object):
         # print("get: query: %s" % query)
 
         # request...
-        self.__conn.request("GET", query, None, headers)
-
-        # response...
-        response = self.__getresponse()
+        response = self.__request("GET", query, None, headers)
         data = response.read()
 
         # error...
@@ -94,10 +88,7 @@ class HTTPClient(object):
 
     def post(self, path, payload, headers):
         # request...
-        self.__conn.request("POST", path, payload, headers)
-
-        # response...
-        response = self.__getresponse()
+        response = self.__request("POST", path, payload, headers)
         data = response.read()
 
         # error...
@@ -109,10 +100,7 @@ class HTTPClient(object):
 
     def put(self, path, payload, headers):
         # request...
-        self.__conn.request("PUT", path, payload, headers)
-
-        # response...
-        response = self.__getresponse()
+        response = self.__request("PUT", path, payload, headers)
         data = response.read()
 
         # error...
@@ -124,14 +112,10 @@ class HTTPClient(object):
 
     def delete(self, path, headers):
         # request...
-        self.__conn.request("DELETE", path, "", headers)
-
-        # response...
-        response = self.__getresponse()
+        response = self.__request("DELETE", path, "", headers)
         data = response.read()
 
         # error...
-
         if response.status != HTTPStatus.OK and response.status != HTTPStatus.NO_CONTENT:
             raise HTTPException.construct(response, data)
 
@@ -140,16 +124,22 @@ class HTTPClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __getresponse(self):
+    def __request(self, method, url, body, headers):
         while True:
             try:
+                self.__conn.request(method, url, body=body, headers=headers)
                 return self.__conn.getresponse()
 
-            except socket.gaierror:                             # Temporary failure in name resolution
+            except (socket.gaierror, http.client.CannotSendRequest):
+                if not self.__wait_for_network:
+                    raise
+
                 time.sleep(self.__NETWORK_WAIT_TIME)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "HTTPClient:{host:%s}" % self.__host
+        hostname = None if self.__host is None else self.__host.name()
+
+        return "HTTPClient:{host:%s, wait_for_network:%s}" % (hostname, self.__wait_for_network)
