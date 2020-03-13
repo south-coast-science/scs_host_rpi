@@ -37,7 +37,7 @@ print("path:%s" % path)
 
 # --------------------------------------------------------------------------------------------------------------------
 
-client = HTTPClient()
+client = HTTPClient(False)
 client.connect(host)
 print(client)
 
