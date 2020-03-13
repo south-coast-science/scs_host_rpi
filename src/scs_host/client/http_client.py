@@ -6,7 +6,9 @@ Created on 9 Nov 2016
 https://stackoverflow.com/questions/33770129/how-do-i-disable-the-ssl-check-in-python-3-x
 """
 
+import socket
 import ssl
+import time
 
 import http.client
 
@@ -22,6 +24,8 @@ class HTTPClient(object):
     """
     classdocs
     """
+
+    __NETWORK_WAIT_TIME = 10.0                      # seconds
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -78,7 +82,7 @@ class HTTPClient(object):
         self.__conn.request("GET", query, None, headers)
 
         # response...
-        response = self.__conn.getresponse()
+        response = self.__getresponse()
         data = response.read()
 
         # error...
@@ -93,7 +97,7 @@ class HTTPClient(object):
         self.__conn.request("POST", path, payload, headers)
 
         # response...
-        response = self.__conn.getresponse()
+        response = self.__getresponse()
         data = response.read()
 
         # error...
@@ -108,7 +112,7 @@ class HTTPClient(object):
         self.__conn.request("PUT", path, payload, headers)
 
         # response...
-        response = self.__conn.getresponse()
+        response = self.__getresponse()
         data = response.read()
 
         # error...
@@ -123,7 +127,7 @@ class HTTPClient(object):
         self.__conn.request("DELETE", path, "", headers)
 
         # response...
-        response = self.__conn.getresponse()
+        response = self.__getresponse()
         data = response.read()
 
         # error...
@@ -132,6 +136,17 @@ class HTTPClient(object):
             raise HTTPException.construct(response, data)
 
         return data.decode()
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def __getresponse(self):
+        while True:
+            try:
+                return self.__conn.getresponse()
+
+            except socket.gaierror:                             # Temporary failure in name resolution
+                time.sleep(self.__NETWORK_WAIT_TIME)
 
 
     # ----------------------------------------------------------------------------------------------------------------
