@@ -33,7 +33,7 @@ class TestSampler(Sampler):
     # ----------------------------------------------------------------------------------------------------------------
 
     def sample(self):
-        return 'SAMPLE: ' + LocalizedDatetime.now().as_iso8601()
+        return 'SAMPLE: ' + LocalizedDatetime.now().utc().as_iso8601()
 
 
     def reset(self):
