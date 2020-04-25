@@ -43,7 +43,7 @@ class BluetoothSerial(Process):
         try:
             cls.__serial.join()
         except Exception as ex:
-            print("BluetoothSerial.stop: " + type(ex).__name__, file=sys.stderr)
+            print("BluetoothSerial.stop: " + ex.__class__.__name__, file=sys.stderr)
 
 
     # ----------------------------------------------------------------------------------------------------------------
