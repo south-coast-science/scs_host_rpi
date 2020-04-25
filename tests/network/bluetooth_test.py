@@ -31,7 +31,7 @@ class EchoHandler(object):
             message = command
 
         except Exception as ex:
-            error = type(ex).__name__ + ":" + str(ex)
+            error = ex.__class__.__name__ + ":" + str(ex)
 
         response = MonitorResponse(message, error)
 
