@@ -12,7 +12,7 @@ https://pymotw.com/2/socket/uds.html
 
 import os
 import socket
-# import sys
+import sys
 import time
 
 from scs_core.sys.process_comms import ProcessComms
@@ -111,10 +111,13 @@ class DomainSocket(ProcessComms):
                 break
 
             except (socket.error, FileNotFoundError) as ex:
-                if not wait_for_availability:
-                    raise ConnectionRefusedError(ex)
+                print("DomainSocket.write: %s" % ex, file=sys.stderr)
+                sys.stderr.flush()
 
-                time.sleep(0.1)
+                if not wait_for_availability:
+                    raise ex
+
+                time.sleep(self.__WAIT_FOR_AVAILABILITY)
 
         # data...
         self.__socket.sendall(message.strip().encode())
