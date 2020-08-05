@@ -65,7 +65,7 @@ class WPASupplicantFile(object):
 
         # entries...
         entries = {}
-        matches = re.findall(r'network\s*=\s*{[^\}]+\}', text, re.DOTALL)
+        matches = re.findall(r'network\s*=\s*{[^}]+}', text, re.DOTALL)
 
         for match in matches:
             entry = WPASupplicant.construct_from_entry(match)
