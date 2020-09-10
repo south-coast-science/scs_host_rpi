@@ -35,7 +35,7 @@ class NMCLi(JSONable):
     """
 
     TIMEOUT = 30.0                              # seconds
-    RESTART_WAIT = 20.0                         # seconds
+    RESTART_WAIT = 60.0                         # seconds
 
     # ----------------------------------------------------------------------------------------------------------------
 
