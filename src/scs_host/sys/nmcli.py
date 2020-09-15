@@ -34,7 +34,7 @@ class NMCLi(JSONable):
     classdocs
     """
 
-    TIMEOUT =           20.0                    # seconds
+    TIMEOUT =           20.0                    # seconds (no longer, or NMCLI will timeout itself)
     RESTART_WAIT =      60.0                    # seconds
 
     # ----------------------------------------------------------------------------------------------------------------
