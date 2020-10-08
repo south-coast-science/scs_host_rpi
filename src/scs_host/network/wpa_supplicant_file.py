@@ -12,6 +12,8 @@ import os
 import re
 import subprocess
 
+from scs_core.data.format import Format
+
 from scs_host.network.wpa_supplicant import WPASupplicant
 
 
@@ -134,6 +136,5 @@ class WPASupplicantFile(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        supplicants = '[' + ', '.join(str(supplicant) for supplicant in self.supplicants) + ']'
-
-        return "WPASupplicantFile:{headers:%s, supplicants:%s}" % (self.headers, supplicants)
+        return "WPASupplicantFile:{headers:%s, supplicants:%s}" % \
+               (self.headers, Format.collection(self.supplicants))
