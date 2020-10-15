@@ -204,7 +204,11 @@ class Host(Node):
 
     @classmethod
     def disk_usage(cls, path):
-        st = os.statvfs(path)
+        try:
+            st = os.statvfs(path)
+
+        except OSError:
+            return None
 
         return DiskUsage.construct_from_statvfs(path, st)
 
