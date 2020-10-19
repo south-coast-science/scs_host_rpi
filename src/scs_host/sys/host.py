@@ -16,7 +16,7 @@ from pathlib import Path
 from scs_core.sys.disk_usage import DiskUsage
 from scs_core.sys.disk_volume import DiskVolume
 from scs_core.sys.ipv4_address import IPv4Address
-from scs_core.sys.node import Node
+from scs_core.sys.node import IoTNode
 
 from scs_host.sys.mcu_datum import MCUDatum
 
@@ -25,7 +25,7 @@ from scs_host.sys.mcu_datum import MCUDatum
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class Host(Node):
+class Host(IoTNode):
     """
     Broadcom BCM2837 64bit ARMv7 quad core processor
     """
