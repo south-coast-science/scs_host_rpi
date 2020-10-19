@@ -68,9 +68,6 @@ class Host(Node):
     __SCS_DIR =             "SCS"                               # hard-coded rel path
 
     __COMMAND_DIR =         "cmd"                               # hard-coded rel path
-    __CONF_DIR =            "conf"                              # hard-coded rel path
-    __AWS_DIR =             "aws"                               # hard-coded rel path
-    __OSIO_DIR =            "osio"                              # hard-coded rel path
 
     __LATEST_UPDATE =       "latest_update.txt"                 # hard-coded rel path
     __DFE_EEP_IMAGE =       "dfe_cape.eep"                      # hard-coded rel path
@@ -245,21 +242,6 @@ class Host(Node):
     @classmethod
     def command_dir(cls):
         return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__COMMAND_DIR)
-
-
-    @classmethod
-    def conf_dir(cls):
-        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__CONF_DIR)
-
-
-    @classmethod
-    def aws_dir(cls):
-        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__AWS_DIR)
-
-
-    @classmethod
-    def osio_dir(cls):
-        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__OSIO_DIR)
 
 
     @classmethod
