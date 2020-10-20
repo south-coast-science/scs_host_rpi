@@ -131,6 +131,19 @@ class Host(IoTNode):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # network identity...
+
+    @classmethod
+    def name(cls):
+        return socket.gethostname()
+
+
+    @classmethod
+    def server_ipv4_address(cls):
+        return IPv4Address.construct(cls.__SERVER_IPV4_ADDRESS)
+
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
     def gps_device(cls):
@@ -148,18 +161,7 @@ class Host(IoTNode):
 
 
     # ----------------------------------------------------------------------------------------------------------------
-
-    @classmethod
-    def name(cls):
-        return socket.gethostname()
-
-
-    @classmethod
-    def server_ipv4_address(cls):
-        return IPv4Address.construct(cls.__SERVER_IPV4_ADDRESS)
-
-
-    # ----------------------------------------------------------------------------------------------------------------
+    # SPI...
 
     @classmethod
     def ndir_spi_bus(cls):
@@ -210,6 +212,7 @@ class Host(IoTNode):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # time...
 
     @classmethod
     def time_is_synchronized(cls):
@@ -217,6 +220,7 @@ class Host(IoTNode):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # tmp directories...
 
     @classmethod
     def lock_dir(cls):
@@ -229,6 +233,7 @@ class Host(IoTNode):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # filesystem paths...
 
     @classmethod
     def home_path(cls):
