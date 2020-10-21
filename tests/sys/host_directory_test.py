@@ -32,7 +32,7 @@ try:
     command_path = Host.command_path()
     print("command_path: %s" % command_path)
 except NotImplementedError:
-    print("command_dir: None")
+    print("command_path: None")
 
 print("-")
 
