@@ -20,7 +20,7 @@ from scs_core.sys.node import IoTNode
 from scs_core.sys.persistence_manager import FilesystemPersistenceManager
 from scs_core.sys.uptime_datum import UptimeDatum
 
-from scs_host.sys.mcu_datum import MCUDatum
+from scs_host.sys.host_status import HostStatus
 
 
 # TODO: fix EEPROM access
@@ -161,7 +161,7 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
         temp = float(message)
 
-        return MCUDatum(temp)
+        return HostStatus(temp)
 
 
     # ----------------------------------------------------------------------------------------------------------------
