@@ -20,7 +20,7 @@ from scs_core.sys.node import IoTNode
 from scs_core.sys.persistence_manager import FilesystemPersistenceManager
 from scs_core.sys.uptime_datum import UptimeDatum
 
-from scs_host.sys.mcu_datum import MCUDatum
+from scs_host.sys.host_status import HostStatus
 
 
 # TODO: fix EEPROM access
@@ -103,17 +103,6 @@ class Host(IoTNode, FilesystemPersistenceManager):
         subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
 
-    @staticmethod
-    def mcu_temp():
-        message = str(os.popen("vcgencmd measure_temp").readline())
-
-        message = message.replace("temp=", "").replace("'C\n", "")
-
-        temp = float(message)
-
-        return MCUDatum(temp)
-
-
     @classmethod
     def shutdown(cls):
         subprocess.call(['sudo', 'shutdown', 'now'])
@@ -160,6 +149,19 @@ class Host(IoTNode, FilesystemPersistenceManager):
     @classmethod
     def psu_device(cls):
         raise NotImplementedError()
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+    # status...
+
+    @classmethod
+    def status(cls):
+        message = str(os.popen("vcgencmd measure_temp").readline())
+        message = message.replace("temp=", "").replace("'C\n", "")
+
+        temp = float(message)
+
+        return HostStatus(temp)
 
 
     # ----------------------------------------------------------------------------------------------------------------
