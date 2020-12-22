@@ -14,8 +14,8 @@ from scs_host.sys.host import Host
 # --------------------------------------------------------------------------------------------------------------------
 
 while True:
-    temp = Host.mcu_temp()
-    print(temp)
+    status = Host.status()
+    print(status)
     print("-")
 
     time.sleep(1)
