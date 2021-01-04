@@ -23,8 +23,6 @@ from scs_core.sys.uptime_datum import UptimeDatum
 from scs_host.sys.host_status import HostStatus
 
 
-# TODO: fix EEPROM access
-
 # --------------------------------------------------------------------------------------------------------------------
 
 class Host(IoTNode, FilesystemPersistenceManager):
@@ -35,7 +33,7 @@ class Host(IoTNode, FilesystemPersistenceManager):
     OS_ENV_PATH =           'SCS_ROOT_PATH'
 
     I2C_EEPROM =            3
-    I2C_SENSORS =           1
+    I2C_APPLICATION =       1
 
     DFE_EEPROM_ADDR =       0x50
     DFE_UID_ADDR =          0x58
