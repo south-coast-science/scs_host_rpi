@@ -106,12 +106,13 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
     @classmethod
     def shutdown(cls):
-        subprocess.call(['sudo', 'shutdown', 'now'])
+        # subprocess.call(['sudo', 'shutdown', 'now'])          # see Tim email on 2021-03-24
+        subprocess.call(['systemctl', 'poweroff', '-i'])
 
 
     @classmethod
     def software_update_report(cls):
-        git_pull = GitPull.load(cls)
+        git_pull = GitPull.load(cls, default=None)
 
         return None if git_pull is None else str(git_pull.pulled_on.datetime.date())
 
