@@ -104,9 +104,8 @@ class Host(IoTNode, FilesystemPersistenceManager):
         call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
 
-    @classmethod
-    def shutdown(cls):
-        # subprocess.call(['sudo', 'shutdown', 'now'])          # see Tim email on 2021-03-24
+    @staticmethod
+    def shutdown():
         call(['systemctl', 'poweroff', '-i'])
 
 
