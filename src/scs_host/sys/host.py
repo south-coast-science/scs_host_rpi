@@ -9,9 +9,9 @@ https://raspberrypi.stackexchange.com/questions/2086/how-do-i-get-the-serial-num
 import os
 import re
 import socket
-import subprocess
 
 from pathlib import Path
+from subprocess import check_output, call, Popen, PIPE, DEVNULL
 
 from scs_core.estate.git_pull import GitPull
 
@@ -101,17 +101,17 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
     @staticmethod
     def enable_eeprom_access():
-        subprocess.call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
+        call(['sudo', 'dtoverlay', 'i2c-gpio', 'i2c_gpio_sda=0', 'i2c_gpio_scl=1'])
 
 
-    @classmethod
-    def shutdown(cls):
-        subprocess.call(['sudo', 'shutdown', 'now'])
+    @staticmethod
+    def shutdown():
+        call(['systemctl', 'poweroff', '-i'])
 
 
     @classmethod
     def software_update_report(cls):
-        git_pull = GitPull.load(cls)
+        git_pull = GitPull.load(cls, default=None)
 
         return None if git_pull is None else str(git_pull.pulled_on.datetime.date())
 
@@ -164,36 +164,36 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
     @classmethod
     def sim(cls):
-        # modems...
-        p = subprocess.Popen(['mmcli', '-K', '-L'], stdout=subprocess.PIPE)
-        stdout_bytes, _ = p.communicate(timeout=10)
+        # ModemList...
+        p = Popen(['mmcli', '-K', '-L'], stdout=PIPE, stderr=DEVNULL)
+        stdout, _ = p.communicate(timeout=10)
 
         if p.returncode != 0:
             return None
 
-        modems = ModemList.construct_from_mmcli(stdout_bytes.decode().splitlines())
+        modems = ModemList.construct_from_mmcli(stdout.decode().splitlines())
         if len(modems) < 1:
             return None
 
-        # SIMs...
-        p = subprocess.Popen(['mmcli', '-K', '-m', modems.number(0)], stdout=subprocess.PIPE)
-        stdout_bytes, _ = p.communicate(timeout=10)
+        # SIMList...
+        p = Popen(['mmcli', '-K', '-m', modems.number(0)], stdout=PIPE, stderr=DEVNULL)
+        stdout, _ = p.communicate(timeout=10)
 
         if p.returncode != 0:
             return None
 
-        sims = SIMList.construct_from_mmcli(stdout_bytes.decode().splitlines())
+        sims = SIMList.construct_from_mmcli(stdout.decode().splitlines())
         if len(sims) < 1:
             return None
 
         # SIM...
-        p = subprocess.Popen(['mmcli', '-K', '-i', sims.number(0)], stdout=subprocess.PIPE)
-        stdout_bytes, _ = p.communicate(timeout=10)
+        p = Popen(['mmcli', '-K', '-i', sims.number(0)], stdout=PIPE, stderr=DEVNULL)
+        stdout, _ = p.communicate(timeout=10)
 
         if p.returncode != 0:
             return None
 
-        return SIM.construct_from_mmcli(stdout_bytes.decode().splitlines())
+        return SIM.construct_from_mmcli(stdout.decode().splitlines())
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
     @classmethod
     def disk_volume(cls, mounted_on):
-        process = subprocess.Popen(['df'], stdout=subprocess.PIPE)
+        process = Popen(['df'], stdout=PIPE)
         out, _ = process.communicate()
         rows = out.decode().splitlines()[1:]
 
@@ -257,7 +257,7 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
     @classmethod
     def uptime(cls, now=None):
-        raw = subprocess.check_output('uptime')
+        raw = check_output('uptime')
         report = raw.decode()
 
         return UptimeDatum.construct_from_report(now, report)
