@@ -72,10 +72,7 @@ class StdIO(ProcessComms):
     @classmethod
     def load_history(cls, filename):
         if os.path.exists(filename):
-            try:
-                readline.read_history_file(filename)
-            except PermissionError:                         # macOS does this sometimes for no apparent reason
-                pass
+            readline.read_history_file(filename)
 
 
     @classmethod
