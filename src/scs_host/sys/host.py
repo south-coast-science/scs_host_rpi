@@ -162,6 +162,11 @@ class Host(IoTNode, FilesystemPersistenceManager):
     # modem...
 
     @classmethod
+    def modem(cls):
+        return None
+
+
+    @classmethod
     def modem_conn(cls):
         return None
 
