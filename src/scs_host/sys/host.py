@@ -20,7 +20,6 @@ from scs_core.sys.disk_volume import DiskVolume
 from scs_core.sys.ipv4_address import IPv4Address
 from scs_core.sys.node import IoTNode
 from scs_core.sys.persistence_manager import FilesystemPersistenceManager
-from scs_core.sys.sim import ModemList, SIMList, SIM
 from scs_core.sys.uptime_datum import UptimeDatum
 
 from scs_host.sys.host_status import HostStatus
@@ -160,40 +159,16 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
 
     # ----------------------------------------------------------------------------------------------------------------
-    # SIM...
+    # modem...
+
+    @classmethod
+    def modem_connection(cls):
+        return None
+
 
     @classmethod
     def sim(cls):
-        # ModemList...
-        p = Popen(['mmcli', '-K', '-L'], stdout=PIPE, stderr=DEVNULL)
-        stdout, _ = p.communicate(timeout=10)
-
-        if p.returncode != 0:
-            return None
-
-        modems = ModemList.construct_from_mmcli(stdout.decode().splitlines())
-        if len(modems) < 1:
-            return None
-
-        # SIMList...
-        p = Popen(['mmcli', '-K', '-m', modems.number(0)], stdout=PIPE, stderr=DEVNULL)
-        stdout, _ = p.communicate(timeout=10)
-
-        if p.returncode != 0:
-            return None
-
-        sims = SIMList.construct_from_mmcli(stdout.decode().splitlines())
-        if len(sims) < 1:
-            return None
-
-        # SIM...
-        p = Popen(['mmcli', '-K', '-i', sims.number(0)], stdout=PIPE, stderr=DEVNULL)
-        stdout, _ = p.communicate(timeout=10)
-
-        if p.returncode != 0:
-            return None
-
-        return SIM.construct_from_mmcli(stdout.decode().splitlines())
+        return None
 
 
     # ----------------------------------------------------------------------------------------------------------------
