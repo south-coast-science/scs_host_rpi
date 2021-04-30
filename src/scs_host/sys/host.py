@@ -11,7 +11,7 @@ import re
 import socket
 
 from pathlib import Path
-from subprocess import check_output, call, Popen, PIPE, DEVNULL
+from subprocess import check_output, call, Popen, PIPE
 
 from scs_core.estate.git_pull import GitPull
 
