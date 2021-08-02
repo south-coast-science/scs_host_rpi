@@ -16,7 +16,7 @@ from scs_host.sys.host_serial import HostSerial
 serial = None
 
 try:
-    serial = HostSerial(0, 9600, False)
+    serial = HostSerial(0, 9600)
     serial.open(4, 2)
     print(serial)
 
