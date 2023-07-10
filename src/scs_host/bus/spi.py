@@ -106,6 +106,13 @@ class SPI(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    @property
+    def dev_path(self):
+        return None
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
     def __str__(self, *args, **kwargs):
         return "SPI:{bus:%d, device:%s, mode:%s, max_speed:%s, connection:%s}" % \
                (self.__bus, self.__device, self.__mode, self.__max_speed, self.__connection)
