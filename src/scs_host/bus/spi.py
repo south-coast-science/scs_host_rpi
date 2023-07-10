@@ -21,12 +21,10 @@ class SPI(object):
     """
     classdocs
     """
+
     __LOCK_TIMEOUT =        10.0
 
-
     # ----------------------------------------------------------------------------------------------------------------
-
-    # def __init__(self, bus, device, mode, max_speed):
 
     def __init__(self, dev_path, mode, max_speed):
         """
@@ -108,7 +106,7 @@ class SPI(object):
 
     @property
     def dev_path(self):
-        return None
+        return ''
 
 
     # ----------------------------------------------------------------------------------------------------------------
