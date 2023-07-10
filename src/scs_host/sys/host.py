@@ -240,6 +240,19 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # SPI...
+
+    @classmethod
+    def opc_spi_dev_path(cls):
+        return None
+
+
+    @classmethod
+    def ndir_spi_dev_path(cls):
+        return None
+
+
+    # ----------------------------------------------------------------------------------------------------------------
     # time...
 
     @classmethod
