@@ -64,6 +64,8 @@ class Host(IoTNode, FilesystemPersistenceManager):
     # ----------------------------------------------------------------------------------------------------------------
     # directories and files...
 
+    __HOSTNAME_PREFIX =     'scs-rpi-'
+
     __DEFAULT_HOME_DIR =    "/home/pi"                          # hard-coded abs path
     __LOCK_DIR =            "/run/lock/southcoastscience"       # hard-coded abs path
     __TMP_DIR =             "/tmp/southcoastscience"            # hard-coded abs path
@@ -118,6 +120,11 @@ class Host(IoTNode, FilesystemPersistenceManager):
 
     # ----------------------------------------------------------------------------------------------------------------
     # network identity...
+
+    @classmethod
+    def hostname_prefix(cls):
+        return cls.__HOSTNAME_PREFIX
+
 
     @classmethod
     def name(cls):
@@ -237,6 +244,19 @@ class Host(IoTNode, FilesystemPersistenceManager):
             return None
 
         return DiskUsage.construct_from_statvfs(path, st)
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+    # SPI...
+
+    @classmethod
+    def opc_spi_dev_path(cls):
+        return None
+
+
+    @classmethod
+    def ndir_spi_dev_path(cls):
+        return None
 
 
     # ----------------------------------------------------------------------------------------------------------------
