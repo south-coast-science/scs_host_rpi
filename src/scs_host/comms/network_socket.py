@@ -28,7 +28,7 @@ class NetworkSocket(ProcessComms):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, host, port=2000):        # a receiving socket should have host ''
+    def __init__(self, host='', port=2000):        # a receiving socket should have host ''
         """
         Constructor
         """

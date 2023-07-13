@@ -12,6 +12,7 @@ http://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspb
 from spidev import SpiDev
 
 from scs_host.lock.lock import Lock
+from scs_host.sys.host import Host
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -20,18 +21,19 @@ class SPI(object):
     """
     classdocs
     """
-    __LOCK_TIMEOUT =        10.0
 
+    __LOCK_TIMEOUT =        10.0
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, bus, device, mode, max_speed):
+    def __init__(self, _dev_path, mode, max_speed):
         """
         Constructor
         """
 
-        self.__bus = bus
-        self.__device = device
+        self.__bus = Host.opc_spi_bus()
+        self.__device = Host.opc_spi_device()
+
         self.__mode = mode
         self.__max_speed = max_speed
 
@@ -98,6 +100,13 @@ class SPI(object):
     @property
     def device(self):
         return self.__device
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @property
+    def dev_path(self):
+        return ''
 
 
     # ----------------------------------------------------------------------------------------------------------------
