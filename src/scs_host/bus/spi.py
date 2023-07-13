@@ -26,7 +26,7 @@ class SPI(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, dev_path, mode, max_speed):
+    def __init__(self, _dev_path, mode, max_speed):
         """
         Constructor
         """
