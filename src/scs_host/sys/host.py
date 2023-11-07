@@ -33,6 +33,8 @@ class Host(IoTNode, FilesystemPersistenceManager):
     Broadcom BCM2837 64bit ARMv7 quad core processor
     """
 
+    MINIMUM_OS_RELEASE =    '4.19.75'
+
     OS_ENV_PATH =           'SCS_ROOT_PATH'
 
     I2C_EEPROM =            3
@@ -134,6 +136,14 @@ class Host(IoTNode, FilesystemPersistenceManager):
     @classmethod
     def server_ipv4_address(cls):
         return IPv4Address.construct(cls.__SERVER_IPV4_ADDRESS)
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+    # version...
+
+    @classmethod
+    def minimum_os_release(cls):
+        return cls.MINIMUM_OS_RELEASE
 
 
     # ----------------------------------------------------------------------------------------------------------------
