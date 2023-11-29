@@ -14,6 +14,7 @@ from pathlib import Path
 from subprocess import check_output, call, Popen, PIPE, DEVNULL
 
 from scs_core.estate.git_pull import GitPull
+from scs_core.estate.software_version import SoftwareVersion
 
 from scs_core.sys.disk_usage import DiskUsage
 from scs_core.sys.disk_volume import DiskVolume
@@ -33,7 +34,8 @@ class Host(IoTNode, FilesystemPersistenceManager):
     Broadcom BCM2837 64bit ARMv7 quad core processor
     """
 
-    MINIMUM_OS_RELEASE =    '4.19.75'
+    MINIMUM_OS_RELEASE = '4.19.75'
+    MINIMUM_GREENGRASS_RELEASE = '1.11.5'
 
     OS_ENV_PATH =           'SCS_ROOT_PATH'
 
@@ -142,8 +144,13 @@ class Host(IoTNode, FilesystemPersistenceManager):
     # version...
 
     @classmethod
-    def minimum_os_release(cls):
-        return cls.MINIMUM_OS_RELEASE
+    def minimum_required_os_release(cls):
+        return SoftwareVersion.construct_from_jdict(cls.MINIMUM_OS_RELEASE)
+
+
+    @classmethod
+    def minimum_required_greengrass_release(cls):
+        return SoftwareVersion.construct_from_jdict(cls.MINIMUM_GREENGRASS_RELEASE)
 
 
     # ----------------------------------------------------------------------------------------------------------------
